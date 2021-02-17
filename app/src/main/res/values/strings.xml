@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Masjid</string>
+    <string name="masjid_terdekat">Masjid Terdekat</string>
+    <string name="cari_masjid">Cari Masjid</string>
+    <string name="title_activity_near_mosque_maps">Map</string>
+    <string name="pilih_kabupaten">Pilih Kabupaten</string>
+    <string name="pilih_kecamatan">Pilih Kecamatan</string>
+    <string name="pilih_lokasi">Pilih Lokasi</string>
+</resources>
