@@ -46,4 +46,9 @@ ext {
 
     //MVVM
     lifecycle_extensions = '2.2.0'
+
+    //maps
+    maps = '17.0.0'
+    location = '17.1.0'
+    places = '2.4.0'
 }
