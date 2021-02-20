@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.project.masjid.R
 import com.project.masjid.databinding.ActivityMainBinding
+import com.project.masjid.ui.login.LoginActivity
 import com.project.masjid.ui.near_mosque.NearMosqueMapsActivity
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         activityMainBinding.btnMasjidTerdekat.setOnClickListener(this)
         activityMainBinding.btnCariMasjid.setOnClickListener(this)
+        activityMainBinding.btnLogin.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -29,6 +31,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btn_cari_masjid -> {
                 startActivity(Intent(this, ChooseLocationActivity::class.java))
+            }
+            R.id.btn_login -> {
+                startActivity(Intent(this, LoginActivity::class.java))
             }
         }
     }

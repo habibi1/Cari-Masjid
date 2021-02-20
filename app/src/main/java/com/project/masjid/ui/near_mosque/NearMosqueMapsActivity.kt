@@ -1,20 +1,20 @@
 package com.project.masjid.ui.near_mosque
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,19 +22,18 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
-import com.google.android.libraries.places.api.net.PlacesClient
 import com.project.masjid.R
+import com.project.masjid.databinding.ActivityMainBinding
+import com.project.masjid.databinding.ActivityNearMosqueMapsBinding
+import java.util.*
+
 
 class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    private lateinit var activityNearMosqueBinding: ActivityNearMosqueMapsBinding
+
     private var map: GoogleMap? = null
     private var cameraPosition: CameraPosition? = null
-
-    // The entry point to the Places API.
-    private lateinit var placesClient: PlacesClient
 
     //TODO: Change default location.
     private val defaultLocation = LatLng(-33.8523341, 151.2106085) //Sydney
@@ -43,16 +42,13 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private var lastKnownLocation: Location? = null
-    private var likelyPlaceNames: Array<String?> = arrayOfNulls(0)
-    private var likelyPlaceAddresses: Array<String?> = arrayOfNulls(0)
-    private var likelyPlaceAttributions: Array<List<*>?> = arrayOfNulls(0)
-    private var likelyPlaceLatLngs: Array<LatLng?> = arrayOfNulls(0)
 
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activityNearMosqueBinding = ActivityNearMosqueMapsBinding.inflate(layoutInflater)
 
         // [START_EXCLUDE silent]
         // Retrieve location and camera position from saved instance state.
@@ -65,12 +61,9 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // [END_EXCLUDE]
 
         // Retrieve the content view that renders the map.
-        setContentView(R.layout.activity_near_mosque_maps)
+        setContentView(activityNearMosqueBinding.root)
 
-        // [START_EXCLUDE silent]
-        // Construct a PlacesClient
-        Places.initialize(applicationContext, getString(R.string.google_maps_key))
-        placesClient = Places.createClient(this)
+        hiddenMaps()
 
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -80,8 +73,26 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        showCurrentPlace()
+    }
 
+    private fun hiddenMaps(){
+        activityNearMosqueBinding.map.isInvisible
+        activityNearMosqueBinding.pbMaps.isVisible
+        activityNearMosqueBinding.tvStatus.isVisible
+        activityNearMosqueBinding.tvStatus.text = getString(R.string.mencari_lokasi)
+    }
+
+    private fun showMaps(){
+        activityNearMosqueBinding.map.isVisible
+        activityNearMosqueBinding.pbMaps.isInvisible
+        activityNearMosqueBinding.tvStatus.isInvisible
+    }
+
+    private fun failedLoadMaps(string: String){
+        activityNearMosqueBinding.map.isInvisible
+        activityNearMosqueBinding.pbMaps.isInvisible
+        activityNearMosqueBinding.tvStatus.isVisible
+        activityNearMosqueBinding.tvStatus.text = string
     }
 
     /**
@@ -134,19 +145,50 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val locationResult = fusedLocationProviderClient.lastLocation
                 locationResult.addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
+
+                        showMaps()
+
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
+
+                            val addresses: List<Address>
+                            val geocoder = Geocoder(this, Locale.getDefault())
+
+                            addresses = geocoder.getFromLocation(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+                            val address: String = addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+                            val city: String = addresses[0].locality
+                            val state: String = addresses[0].adminArea
+                            val country: String = addresses[0].countryName
+                            val postalCode: String = addresses[0].postalCode
+                            val knownName: String = addresses[0].featureName
+                            val knownNae: String = addresses[0].subAdminArea
+                            val knowjnNdae: String = addresses[0].subLocality
+                            Log.d(TAG, city)
+                            Log.d(TAG, state)
+                            Log.d(TAG, country)
+                            Log.d(TAG, postalCode)
+                            Log.d(TAG, knownName)
+                            Log.d(TAG, knownNae)
+                            Log.d(TAG, knowjnNdae)
+                            Log.d(TAG, address)
+                            Log.d(TAG, addresses.toString())
+
                             map?.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     LatLng(lastKnownLocation!!.latitude,
                                             lastKnownLocation!!.longitude), DEFAULT_ZOOM))
                         }
                     } else {
+
+                        failedLoadMaps(getString(R.string.lokasi_tidak_ditemukan))
+
                         Log.d(TAG, "Current location is null. Using defaults.")
                         Log.e(TAG, "Exception: %s", task.exception)
-                        map?.moveCamera(CameraUpdateFactory
+                        /*map?.moveCamera(CameraUpdateFactory
                                 .newLatLngZoom(defaultLocation, DEFAULT_ZOOM))
-                        map?.uiSettings?.isMyLocationButtonEnabled = false
+                        map?.uiSettings?.isMyLocationButtonEnabled = false*/
                     }
                 }
             }
@@ -196,50 +238,6 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     // [END maps_current_place_on_request_permissions_result]
 
     /**
-     * Prompts the user to select the current place from a list of likely places, and shows the
-     * current place on the map - provided the user has granted location permission.
-     */
-    // [START maps_current_place_show_current_place]
-    @SuppressLint("MissingPermission")
-    private fun showCurrentPlace() {
-        if (map == null) {
-            return
-        }
-        if (locationPermissionGranted) {
-            // Use fields to define the data types to return.
-            val placeFields = listOf(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
-
-            // Use the builder to create a FindCurrentPlaceRequest.
-            val request = FindCurrentPlaceRequest.newInstance(placeFields)
-
-            // Get the likely places - that is, the businesses and other points of interest that
-            // are the best match for the device's current location.
-            val placeResult = placesClient.findCurrentPlace(request)
-            placeResult.addOnCompleteListener { task ->
-                if (task.isSuccessful && task.result != null) {
-                    val likelyPlaces = task.result
-
-                } else {
-                    Log.e(TAG, "Exception: %s", task.exception)
-                }
-            }
-        } else {
-            // The user has not granted permission.
-            Log.i(TAG, "The user did not grant location permission.")
-
-            // Add a default marker, because the user hasn't selected a place.
-            map?.addMarker(MarkerOptions()
-                    .title(getString(R.string.default_info_title))
-                    .position(defaultLocation)
-                    .snippet(getString(R.string.default_info_snippet)))
-
-            // Prompt the user for permission.
-            getLocationPermission()
-        }
-    }
-    // [END maps_current_place_show_current_place]
-
-    /**
      * Saves the state of the map when the activity is paused.
      */
     // [START maps_current_place_on_save_instance_state]
@@ -286,8 +284,5 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         private const val KEY_CAMERA_POSITION = "camera_position"
         private const val KEY_LOCATION = "location"
         // [END maps_current_place_state_keys]
-
-        // Used for selecting the current place.
-        private const val M_MAX_ENTRIES = 5
     }
 }

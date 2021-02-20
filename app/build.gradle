@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -55,7 +56,10 @@ dependencies {
     //maps
     implementation "com.google.android.gms:play-services-maps:$maps"
     implementation "com.google.android.gms:play-services-location:$location"
-    implementation "com.google.android.libraries.places:places:$places"
+
+    //firebase
+    implementation 'com.google.firebase:firebase-auth-ktx:20.0.2'
+    implementation 'androidx.annotation:annotation:1.1.0'
 
     //testing
     testImplementation "junit:junit:$junitVersion"
@@ -64,4 +68,6 @@ dependencies {
 
     //MVVM
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
 }
