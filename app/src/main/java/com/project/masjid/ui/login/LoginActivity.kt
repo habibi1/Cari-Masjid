@@ -1,6 +1,7 @@
 package com.project.masjid.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -15,10 +16,24 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.project.masjid.R
+import com.project.masjid.ui.admin.AdminActivity
+import com.project.masjid.ui.near_mosque.NearMosqueMapsActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), CoroutineScope {
 
     private lateinit var loginViewModel: LoginViewModel
+
+    //start initialized for using coroutine
+    private var job: Job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+    //end initialized for using coroutine
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,20 +62,21 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        loginViewModel.isLoading.observe(this@LoginActivity, Observer {
+            loading.visibility = if (it) View.VISIBLE else View.GONE
+        })
+
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
+                startActivity(Intent(this, AdminActivity::class.java))
             }
-            setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
+            //setResult(Activity.RESULT_OK)
         })
 
         username.afterTextChanged {
@@ -80,19 +96,23 @@ class LoginActivity : AppCompatActivity() {
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString(),
-                            this@LoginActivity
-                        )
+                    EditorInfo.IME_ACTION_DONE -> {
+                        launch {
+                            loginViewModel.login(
+                                username.text.toString(),
+                                password.text.toString(),
+                                this@LoginActivity
+                            )
+                        }
+                    }
                 }
                 false
             }
 
             login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString(), this@LoginActivity)
+                launch {
+                    loginViewModel.login(username.text.toString(), password.text.toString(), this@LoginActivity)
+                }
             }
         }
     }
@@ -110,6 +130,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showLoginFailed(@StringRes errorString: Int) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 }
 

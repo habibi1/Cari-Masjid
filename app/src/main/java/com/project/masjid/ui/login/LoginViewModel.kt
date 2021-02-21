@@ -1,12 +1,13 @@
 package com.project.masjid.ui.login
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
 import com.project.masjid.R
 import com.project.masjid.database.login.LoginRepository
-import com.project.masjid.database.login.Result
+import com.project.masjid.database.login.ResultLogin
+
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
@@ -16,15 +17,28 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(username: String, password: String, loginActivity: LoginActivity) {
-        // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password, loginActivity)
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
+    suspend fun login(username: String, password: String, loginActivity: LoginActivity) {
+
+        _isLoading.value = true
+
+        // can be launched in a separate asynchronous job
+        when (val result = loginRepository.firebaseSignInEmailAndPassword(
+            username,
+            password,
+            loginActivity
+        )){
+            is ResultLogin.Success -> {
+                _isLoading.value = false
+                _loginResult.value =
+                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+            }
+            is ResultLogin.Error -> {
+                _isLoading.value = false
+                _loginResult.value = LoginResult(error = R.string.login_failed)
+            }
         }
     }
 
@@ -40,11 +54,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else {
-            username.isNotBlank()
-        }
+        return Patterns.EMAIL_ADDRESS.matcher(username).matches()
     }
 
     // A placeholder password validation check

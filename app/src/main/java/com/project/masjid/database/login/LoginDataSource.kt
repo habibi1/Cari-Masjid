@@ -16,7 +16,7 @@ class LoginDataSource {
 
     private lateinit var auth: FirebaseAuth
 
-    fun login(username: String, password: String, loginActivity: LoginActivity): Result<LoggedInUser> {
+    fun login(username: String, password: String, loginActivity: LoginActivity): ResultLogin<LoggedInUser> {
         try {
             auth = Firebase.auth
             var status = false
@@ -41,15 +41,15 @@ class LoginDataSource {
             return if (status){
                 Log.d(TAG, "signInWithEmail:success")
                 val fakeUser = LoggedInUser(UUID.randomUUID().toString(), "Jane Doe")
-                Result.Success(fakeUser)
+                ResultLogin.Success(fakeUser)
             } else {
                 Log.w(TAG, "signInWithEmail:failure")
-                Result.Error(IOException("Error logging in"))
+                ResultLogin.Error(IOException("Error logging in"))
             }
 
         } catch (e: Throwable) {
             Log.w(TAG, "signInWithEmail:failure", e)
-            return Result.Error(IOException("Error logging in", e))
+            return ResultLogin.Error(IOException("Error logging in", e))
         }
     }
 
