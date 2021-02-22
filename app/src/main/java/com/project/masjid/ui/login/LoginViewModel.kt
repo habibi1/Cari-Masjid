@@ -8,7 +8,6 @@ import com.project.masjid.R
 import com.project.masjid.database.login.LoginRepository
 import com.project.masjid.database.login.ResultLogin
 
-
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
