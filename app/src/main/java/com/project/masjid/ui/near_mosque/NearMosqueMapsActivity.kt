@@ -35,8 +35,6 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var map: GoogleMap? = null
     private var cameraPosition: CameraPosition? = null
 
-    //TODO: Change default location.
-    private val defaultLocation = LatLng(-33.8523341, 151.2106085) //Sydney
     private var locationPermissionGranted = false
 
     // The geographical location where the device is currently located. That is, the last-known

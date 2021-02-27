@@ -10,6 +10,7 @@
     <string name="lokasi_tidak_ditemukan">Lokasi tidak ditemukan.</string>
     <string name="login">Login</string>
     <string name="pilih_titik_lokasi_masjid">Pilih titik lokasi masjid</string>
+    <string name="konfirmasi">Konfirmasi</string>
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
