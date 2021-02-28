@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.project.masjid.R
+import com.project.masjid.database.MosqueEntity
 import com.project.masjid.databinding.ActivityPinPointMapsBinding
 import com.project.masjid.ui.near_mosque.NearMosqueMapsActivity
 import java.util.*
@@ -45,10 +46,10 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
 
     private lateinit var activityPinPointMapsBinding: ActivityPinPointMapsBinding
 
-    private var firstClickMaps: Boolean = true
+    private lateinit var mosqueData : MosqueEntity
 
     companion object {
-        private val TAG = NearMosqueMapsActivity::class.java.simpleName
+        private val TAG = PinPointMapsActivity::class.java.simpleName
         private const val DEFAULT_ZOOM = 15f
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
 
@@ -297,24 +298,19 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
         addresses = geocoder.getFromLocation(p0!!.latitude, p0.longitude, 1)
         // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
-        val address: String = addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-
-        val city: String = addresses[0].locality
-        val state: String = addresses[0].adminArea
-        val country: String = addresses[0].countryName
-        val postalCode: String = addresses[0].postalCode
-        val knownName: String = addresses[0].featureName
-        val knownNae: String = addresses[0].subAdminArea
-        val knowjnNdae: String = addresses[0].subLocality
-        Log.d(TAG, city)
-        Log.d(TAG, state)
-        Log.d(TAG, country)
-        Log.d(TAG, postalCode)
-        Log.d(TAG, knownName)
-        Log.d(TAG, knownNae)
-        Log.d(TAG, knowjnNdae)
-        Log.d(TAG, address)
-        Log.d(TAG, addresses.toString())
+        mosqueData = MosqueEntity(
+                "",
+                "",
+                addresses[0].getAddressLine(0),
+                addresses[0].locality,
+                addresses[0].subLocality,
+                addresses[0].subAdminArea,
+                addresses[0].adminArea,
+                addresses[0].countryName,
+                addresses[0].postalCode,
+                p0.latitude,
+                p0.longitude
+        )
 
         activityPinPointMapsBinding.btnConfirm.visibility = View.VISIBLE
     }
@@ -322,7 +318,9 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_confirm -> {
-                startActivity(Intent(this, FormAddMosqueActivity::class.java))
+                val moveWithObjectIntent = Intent(this, FormAddMosqueActivity::class.java)
+                moveWithObjectIntent.putExtra(FormAddMosqueActivity.EXTRA_MOSQUE, mosqueData)
+                startActivity(moveWithObjectIntent)
             }
         }
     }

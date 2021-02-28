@@ -12,6 +12,17 @@
     <string name="pilih_titik_lokasi_masjid">Pilih titik lokasi masjid</string>
     <string name="konfirmasi">Konfirmasi</string>
 
+    <string name="nama_masjid">Nama Masjid</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="alamat">Alamat</string>
+    <string name="kecamatan">Kecamatan</string>
+    <string name="kabupaten_kota">Kabupaten/Kota</string>
+    <string name="provinsi">Provinsi</string>
+    <string name="negara">Negara</string>
+    <string name="kode_pos">Kode Pos</string>
+
+    <string name="submit">Submit</string>
+
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

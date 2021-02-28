@@ -109,11 +109,11 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val courses = viewModel.getMosque()
 
         for (item in courses){
-            val latitude = item.lat
-            val longitude = item.lng
+            val latitude = item.latitude
+            val longitude = item.Longitude
             val title = item.name
 
-            val itemMosque = LatLng(latitude, longitude)
+            val itemMosque = LatLng(latitude!!, longitude!!)
             map?.addMarker(MarkerOptions().position(itemMosque).title(title))
             map?.moveCamera(CameraUpdateFactory.newLatLngZoom(itemMosque, DEFAULT_ZOOM))
         }
