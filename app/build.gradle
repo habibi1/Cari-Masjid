@@ -60,6 +60,8 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-auth-ktx:20.0.2'
     implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:22.1.0'
+    implementation 'com.google.firebase:firebase-storage-ktx:19.2.1'
 
     //testing
     testImplementation "junit:junit:$junitVersion"

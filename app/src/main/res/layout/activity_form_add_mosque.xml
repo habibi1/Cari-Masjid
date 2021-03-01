@@ -23,11 +23,22 @@
                 android:layout_gravity="center"
                 android:src="@drawable/ic_round_add_photo_alternate_100"/>
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="@color/red_warning"
+                android:text="@string/harus_diisi"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_name_mosque"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/nama_masjid"
+                app:helperText="@string/harus_diisi"
+                app:helperTextTextColor="@color/red_warning"
                 android:layout_marginTop="@dimen/textfield_margin"
                 android:layout_marginBottom="@dimen/textfield_margin"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -45,6 +56,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/deskripsi"
+                app:helperTextEnabled="false"
+                app:helperText="@string/harus_diisi"
+                app:helperTextTextColor="@color/red_warning"
                 android:layout_marginTop="@dimen/textfield_margin"
                 android:layout_marginBottom="@dimen/textfield_margin"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -141,6 +155,14 @@
                     android:enabled="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/textfield_margin"
+                android:layout_marginBottom="@dimen/textfield_margin"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_submit"

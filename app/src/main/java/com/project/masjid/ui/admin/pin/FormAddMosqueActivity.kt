@@ -10,6 +10,10 @@ import android.provider.MediaStore
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.project.masjid.R
 import com.project.masjid.database.MosqueEntity
 import com.project.masjid.databinding.ActivityFormAddMosqueBinding
@@ -18,6 +22,7 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
 
     private var storagePermissionGranted = false
     private var imageUri: Uri? = null
+    private lateinit var mosque: MosqueEntity
 
     private lateinit var activityFormAddMosqueBinding: ActivityFormAddMosqueBinding
 
@@ -32,7 +37,10 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
         activityFormAddMosqueBinding = ActivityFormAddMosqueBinding.inflate(layoutInflater)
         setContentView(activityFormAddMosqueBinding.root)
 
-        val mosque = intent.getParcelableExtra<MosqueEntity>(EXTRA_MOSQUE) as MosqueEntity
+        activityFormAddMosqueBinding.tilNameMosque.isHelperTextEnabled = false
+        activityFormAddMosqueBinding.tilDescription.isHelperTextEnabled = false
+
+        mosque = intent.getParcelableExtra<MosqueEntity>(EXTRA_MOSQUE) as MosqueEntity
 
         activityFormAddMosqueBinding.tfSubDistrict.setText(mosque.subDistrict)
         activityFormAddMosqueBinding.tfDistrict.setText(mosque.district)
@@ -41,6 +49,7 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
         activityFormAddMosqueBinding.tfPostalCode.setText(mosque.postalCode)
 
         activityFormAddMosqueBinding.imgMosque.setOnClickListener(this)
+        activityFormAddMosqueBinding.btnSubmit.setOnClickListener(this)
     }
 
     private fun getStoragePermission() {
@@ -78,7 +87,10 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
                 openGallery()
             }
             R.id.btn_submit -> {
-
+                if (checkField()){
+                    hidden()
+                    uploadData()
+                }
             }
         }
     }
@@ -97,6 +109,99 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data?.data
             activityFormAddMosqueBinding.imgMosque.setImageURI(imageUri)
+        }
+    }
+
+    private fun checkField(): Boolean{
+        if (activityFormAddMosqueBinding.tfNameMosque.text?.isEmpty() == true){
+            activityFormAddMosqueBinding.tilNameMosque.isHelperTextEnabled = true
+            activityFormAddMosqueBinding.tilNameMosque.helperText = getString(R.string.harus_diisi)
+            return false
+        } else {
+            activityFormAddMosqueBinding.tilNameMosque.isHelperTextEnabled = false
+        }
+
+        if (activityFormAddMosqueBinding.tfDescription.text?.isEmpty() == true){
+            activityFormAddMosqueBinding.tilDescription.isHelperTextEnabled = true
+            activityFormAddMosqueBinding.tilDescription.helperText = getString(R.string.harus_diisi)
+            return false
+        } else {
+            activityFormAddMosqueBinding.tilDescription.isHelperTextEnabled = false
+        }
+
+        if (imageUri == null){
+            activityFormAddMosqueBinding.tvEmpty.visibility = View.VISIBLE
+            return false
+        } else {
+            activityFormAddMosqueBinding.tvEmpty.visibility = View.INVISIBLE
+        }
+
+        return true
+    }
+
+    private fun hidden(){
+        activityFormAddMosqueBinding.pbLoading.visibility = View.VISIBLE
+        activityFormAddMosqueBinding.btnSubmit.visibility = View.INVISIBLE
+        activityFormAddMosqueBinding.tvEmpty.isClickable = false
+        activityFormAddMosqueBinding.tfNameMosque.isEnabled = false
+        activityFormAddMosqueBinding.tfDescription.isEnabled = false
+    }
+
+    private fun show(){
+        activityFormAddMosqueBinding.pbLoading.visibility = View.GONE
+        activityFormAddMosqueBinding.btnSubmit.visibility = View.VISIBLE
+        activityFormAddMosqueBinding.tvEmpty.isClickable = true
+        activityFormAddMosqueBinding.tfNameMosque.isEnabled = true
+        activityFormAddMosqueBinding.tfDescription.isEnabled = true
+    }
+
+    private fun uploadData(){
+
+        val storage = Firebase.storage
+
+        // [START upload_create_reference]
+        // Create a storage reference from our app
+        val storageRef = storage.reference
+
+        var file = imageUri
+        val ref = storageRef.child("images/${file?.lastPathSegment}")
+        var uploadTask = ref.putFile(file!!)
+
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            ref.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                mosque.downloadImage = downloadUri.toString()
+                mosque.name = activityFormAddMosqueBinding.tfNameMosque.text.toString()
+                mosque.description = activityFormAddMosqueBinding.tfDescription.text.toString()
+
+                val db = Firebase.firestore
+
+                db.collection(getString(R.string.masjid))
+                        .document(mosque.province.toString())
+                        .collection(getString(R.string.kabupaten_kota_))
+                        .document(mosque.district.toString())
+                        .collection(getString(R.string.kecamatan))
+                        .document(mosque.subDistrict.toString())
+                        .set(mosque)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful){
+                                Snackbar.make(activityFormAddMosqueBinding.root, R.string.berhasil_ditambahkan, Snackbar.LENGTH_SHORT)
+                                    .show()
+                                finish()
+                            }
+                        }
+            } else {
+                show()
+                // Handle failures
+                // ...
+            }
         }
     }
 }

@@ -18,7 +18,8 @@ object DataDummy {
                 "Indonesia",
                 "54565",
                 -5.3677454743804764,
-                105.21746753462739
+                105.21746753462739,
+                ""
         ))
 
         mosque.add(MosqueEntity(
@@ -32,7 +33,8 @@ object DataDummy {
                 "Indonesia",
                 "54565",
                 -5.367555,
-                105.215740
+                105.215740,
+                ""
         ))
 
         return mosque

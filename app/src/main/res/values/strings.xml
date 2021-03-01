@@ -17,11 +17,17 @@
     <string name="alamat">Alamat</string>
     <string name="kecamatan">Kecamatan</string>
     <string name="kabupaten_kota">Kabupaten/Kota</string>
+    <string name="kabupaten_kota_">Kabupaten_Kota</string>
     <string name="provinsi">Provinsi</string>
     <string name="negara">Negara</string>
     <string name="kode_pos">Kode Pos</string>
 
     <string name="submit">Submit</string>
+    <string name="harus_diisi">Harus diisi!</string>
+    <string name="masjid">Masjid</string>
+    <string name="gagal_mendapatkan_lokasi">Gagal mendapatkan lokasi!</string>
+    <string name="pilih_lokasi_masjid">Pilih lokasi masjid</string>
+    <string name="berhasil_ditambahkan">Berhasil ditambahkan</string>
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>

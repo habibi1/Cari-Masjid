@@ -24,6 +24,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import com.project.masjid.R
 import com.project.masjid.database.MosqueEntity
 import com.project.masjid.databinding.ActivityPinPointMapsBinding
@@ -126,6 +127,9 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
         map = googleMap
 
         map.setOnMapClickListener(this)
+
+        Snackbar.make(activityPinPointMapsBinding.root, R.string.pilih_lokasi_masjid, Snackbar.LENGTH_SHORT)
+            .show()
 //
 //        // Add a marker in Sydney and move the camera
 //        val sydney = LatLng(-34.0, 151.0)
@@ -167,7 +171,7 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
                             val addresses: List<Address>
                             val geocoder = Geocoder(this, Locale.getDefault())
 
-                            addresses = geocoder.getFromLocation(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                            /*addresses = geocoder.getFromLocation(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
                             val address: String = addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
 
@@ -187,7 +191,7 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
                             Log.d(TAG, knowjnNdae)
                             Log.d(TAG, address)
                             Log.d(TAG, addresses.toString())
-
+*/
                             map?.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     LatLng(lastKnownLocation!!.latitude,
                                             lastKnownLocation!!.longitude), DEFAULT_ZOOM))
@@ -288,17 +292,20 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
 
     override fun onMapClick(p0: LatLng?) {
 
-        map.clear()
+        activityPinPointMapsBinding.pbMaps.visibility = View.VISIBLE
 
-        map?.addMarker(MarkerOptions().position(p0!!))
+        map.clear()
 
         val addresses: List<Address>
         val geocoder = Geocoder(this, Locale.getDefault())
 
-        addresses = geocoder.getFromLocation(p0!!.latitude, p0.longitude, 1)
-        // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        try {
+            addresses = geocoder.getFromLocation(p0!!.latitude, p0.longitude, 1)
+            // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
-        mosqueData = MosqueEntity(
+            map?.addMarker(MarkerOptions().position(p0!!))
+
+            mosqueData = MosqueEntity(
                 "",
                 "",
                 addresses[0].getAddressLine(0),
@@ -309,10 +316,19 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
                 addresses[0].countryName,
                 addresses[0].postalCode,
                 p0.latitude,
-                p0.longitude
-        )
+                p0.longitude,
+                ""
+            )
 
-        activityPinPointMapsBinding.btnConfirm.visibility = View.VISIBLE
+            activityPinPointMapsBinding.btnConfirm.visibility = View.VISIBLE
+            activityPinPointMapsBinding.pbMaps.visibility = View.INVISIBLE
+        } catch (e: Exception){
+
+            Snackbar.make(activityPinPointMapsBinding.root, R.string.gagal_mendapatkan_lokasi, Snackbar.LENGTH_SHORT)
+                .show()
+
+            activityPinPointMapsBinding.pbMaps.visibility = View.INVISIBLE
+        }
     }
 
     override fun onClick(v: View?) {
@@ -321,6 +337,7 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
                 val moveWithObjectIntent = Intent(this, FormAddMosqueActivity::class.java)
                 moveWithObjectIntent.putExtra(FormAddMosqueActivity.EXTRA_MOSQUE, mosqueData)
                 startActivity(moveWithObjectIntent)
+                finish()
             }
         }
     }
