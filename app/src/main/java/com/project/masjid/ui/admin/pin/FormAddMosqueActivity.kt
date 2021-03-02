@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -129,6 +129,38 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
             activityFormAddMosqueBinding.tilDescription.isHelperTextEnabled = false
         }
 
+        if (activityFormAddMosqueBinding.tfFasilitas.text?.isEmpty() == true){
+            activityFormAddMosqueBinding.tilFasilitas.isHelperTextEnabled = true
+            activityFormAddMosqueBinding.tilFasilitas.helperText = getString(R.string.harus_diisi)
+            return false
+        } else {
+            activityFormAddMosqueBinding.tilFasilitas.isHelperTextEnabled = false
+        }
+
+        if (activityFormAddMosqueBinding.tfKegiatan.text?.isEmpty() == true){
+            activityFormAddMosqueBinding.tilKegiatan.isHelperTextEnabled = true
+            activityFormAddMosqueBinding.tilKegiatan.helperText = getString(R.string.harus_diisi)
+            return false
+        } else {
+            activityFormAddMosqueBinding.tilKegiatan.isHelperTextEnabled = false
+        }
+
+        if (activityFormAddMosqueBinding.tfInfoKotakAmal.text?.isEmpty() == true){
+            activityFormAddMosqueBinding.tilInfoKotakAmal.isHelperTextEnabled = true
+            activityFormAddMosqueBinding.tilInfoKotakAmal.helperText = getString(R.string.harus_diisi)
+            return false
+        } else {
+            activityFormAddMosqueBinding.tilInfoKotakAmal.isHelperTextEnabled = false
+        }
+
+        if (activityFormAddMosqueBinding.tfSejarah.text?.isEmpty() == true){
+            activityFormAddMosqueBinding.tilSejarah.isHelperTextEnabled = true
+            activityFormAddMosqueBinding.tilSejarah.helperText = getString(R.string.harus_diisi)
+            return false
+        } else {
+            activityFormAddMosqueBinding.tilSejarah.isHelperTextEnabled = false
+        }
+
         if (imageUri == null){
             activityFormAddMosqueBinding.tvEmpty.visibility = View.VISIBLE
             return false
@@ -180,23 +212,28 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
                 mosque.downloadImage = downloadUri.toString()
                 mosque.name = activityFormAddMosqueBinding.tfNameMosque.text.toString()
                 mosque.description = activityFormAddMosqueBinding.tfDescription.text.toString()
+                mosque.fasilitas = activityFormAddMosqueBinding.tfFasilitas.text.toString()
+                mosque.kegiatan = activityFormAddMosqueBinding.tfKegiatan.text.toString()
+                mosque.infoKotakAmal = activityFormAddMosqueBinding.tfInfoKotakAmal.text.toString()
+                mosque.sejarah = activityFormAddMosqueBinding.tfSejarah.text.toString()
 
                 val db = Firebase.firestore
 
                 db.collection(getString(R.string.masjid))
-                        .document(mosque.province.toString())
-                        .collection(getString(R.string.kabupaten_kota_))
-                        .document(mosque.district.toString())
-                        .collection(getString(R.string.kecamatan))
-                        .document(mosque.subDistrict.toString())
-                        .set(mosque)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful){
-                                Snackbar.make(activityFormAddMosqueBinding.root, R.string.berhasil_ditambahkan, Snackbar.LENGTH_SHORT)
-                                    .show()
-                                finish()
-                            }
+                    .document(mosque.province.toString())
+                    .collection(getString(R.string.kabupaten_kota_))
+                    .document(mosque.district.toString())
+                    .collection(getString(R.string.kecamatan))
+                    .document(getString(R.string.daftar_masjid))
+                    .collection(mosque.subDistrict.toString())
+                    .add(mosque)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful){
+                            Toast.makeText(this, getString(R.string.berhasil_ditambahkan), Toast.LENGTH_SHORT)
+                                .show()
+                            finish()
                         }
+                    }
             } else {
                 show()
                 // Handle failures

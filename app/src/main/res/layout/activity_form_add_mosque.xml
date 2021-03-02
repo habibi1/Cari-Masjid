@@ -72,6 +72,126 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_fasilitas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/fasilitas"
+                app:helperTextEnabled="false"
+                app:helperText="@string/harus_diisi"
+                app:helperTextTextColor="@color/red_warning"
+                android:layout_marginTop="@dimen/textfield_margin"
+                android:layout_marginBottom="@dimen/textfield_margin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tf_fasilitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_kegiatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/kegiatan"
+                app:helperTextEnabled="false"
+                app:helperText="@string/harus_diisi"
+                app:helperTextTextColor="@color/red_warning"
+                android:layout_marginTop="@dimen/textfield_margin"
+                android:layout_marginBottom="@dimen/textfield_margin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tf_kegiatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_info_kotak_amal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/info_kotak_amal"
+                app:helperTextEnabled="false"
+                app:helperText="@string/harus_diisi"
+                app:helperTextTextColor="@color/red_warning"
+                android:layout_marginTop="@dimen/textfield_margin"
+                android:layout_marginBottom="@dimen/textfield_margin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tf_info_kotak_amal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_sejarah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/sejarah"
+                app:helperTextEnabled="false"
+                app:helperText="@string/harus_diisi"
+                app:helperTextTextColor="@color/red_warning"
+                android:layout_marginTop="@dimen/textfield_margin"
+                android:layout_marginBottom="@dimen/textfield_margin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tf_sejarah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--<com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/textfield_margin"
+                android:layout_marginBottom="@dimen/textfield_margin">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    style="@style/Widget.MaterialComponents.CardView">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/materialTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tambah_fasilitas"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_add_circle_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_fasilitas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/data_kosong"
+                android:layout_marginBottom="@dimen/textfield_margin"/>
+-->
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_sub_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

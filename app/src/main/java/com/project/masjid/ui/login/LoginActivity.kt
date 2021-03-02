@@ -1,6 +1,5 @@
 package com.project.masjid.ui.login
 
-import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +16,6 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.project.masjid.R
 import com.project.masjid.ui.admin.AdminActivity
-import com.project.masjid.ui.near_mosque.NearMosqueMapsActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -63,7 +61,13 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
         })
 
         loginViewModel.isLoading.observe(this@LoginActivity, Observer {
-            loading.visibility = if (it) View.VISIBLE else View.GONE
+            if (it){
+                loading.visibility = View.VISIBLE
+                login.isEnabled = false
+            } else {
+                loading.visibility = View.GONE
+                login.isEnabled = true
+            }
         })
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {

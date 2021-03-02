@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     tools:context=".ui.admin.AdminActivity">
 
     <androidx.core.widget.NestedScrollView
@@ -18,14 +19,31 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_pin_maps"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tambah_data_masjid"
+                    android:gravity="center"
+                    app:drawableTopCompat="@drawable/ic_round_add_location_100"
+                    android:layout_margin="6dp"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_edit_maps"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/pilih_titik_lokasi_masjid"
+                    android:text="@string/edit_data_masjid"
                     android:gravity="center"
-                    app:drawableTopCompat="@drawable/ic_round_add_location_100"/>
+                    app:drawableTopCompat="@drawable/ic_baseline_edit_location_100"
+                    android:layout_margin="6dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 

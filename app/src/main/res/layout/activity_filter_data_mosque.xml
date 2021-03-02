@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.admin.edit.FilterDataMosqueActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_pilih_kabupaten"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <AutoCompleteTextView
+            android:id="@+id/act_pilih_kabupaten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pilih_kabupaten"
+            android:inputType="none"
+            tools:ignore="LabelFor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_pilih_kecamatan"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <AutoCompleteTextView
+            android:id="@+id/act_pilih_kecamatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pilih_kecamatan"
+            android:inputType="none"
+            tools:ignore="LabelFor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</LinearLayout>

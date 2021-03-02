@@ -11,6 +11,9 @@
     <string name="login">Login</string>
     <string name="pilih_titik_lokasi_masjid">Pilih titik lokasi masjid</string>
     <string name="konfirmasi">Konfirmasi</string>
+    <string name="edit_data_masjid">Edit Data Masjid</string>
+    <string name="tambah_data_masjid">Tambah Data Masjid</string>
+    <string name="lampung">Lampung</string>
 
     <string name="nama_masjid">Nama Masjid</string>
     <string name="deskripsi">Deskripsi</string>
@@ -21,6 +24,15 @@
     <string name="provinsi">Provinsi</string>
     <string name="negara">Negara</string>
     <string name="kode_pos">Kode Pos</string>
+    <string name="daftar_masjid">Daftar_Masjid</string>
+    <string name="tidak_ada_masjid">Tidak ada masjid terdaftar!</string>
+    <string name="data_kosong">Data kosong</string>
+    <string name="tambah_fasilitas">Tambah Fasilitas</string>
+    <string name="fasilitas">Fasilitas</string>
+    <string name="kegiatan">Kegiatan</string>
+    <string name="info_kotak_amal">Info Kotak Amal</string>
+    <string name="sejarah">Sejarah</string>
+    <string name="sub_district">subDistrict</string>
 
     <string name="submit">Submit</string>
     <string name="harus_diisi">Harus diisi!</string>

@@ -22,7 +22,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.project.masjid.R
+import com.project.masjid.database.MosqueEntity
 import com.project.masjid.databinding.ActivityMainBinding
 import com.project.masjid.databinding.ActivityNearMosqueMapsBinding
 import java.util.*
@@ -144,8 +149,6 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 locationResult.addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
 
-                        showMaps()
-
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
@@ -155,24 +158,39 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                             addresses = geocoder.getFromLocation(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
-                            val address: String = addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                            val db = Firebase.firestore
 
-                            val city: String = addresses[0].locality
-                            val state: String = addresses[0].adminArea
-                            val country: String = addresses[0].countryName
-                            val postalCode: String = addresses[0].postalCode
-                            val knownName: String = addresses[0].featureName
-                            val knownNae: String = addresses[0].subAdminArea
-                            val knowjnNdae: String = addresses[0].subLocality
-                            Log.d(TAG, city)
-                            Log.d(TAG, state)
-                            Log.d(TAG, country)
-                            Log.d(TAG, postalCode)
-                            Log.d(TAG, knownName)
-                            Log.d(TAG, knownNae)
-                            Log.d(TAG, knowjnNdae)
-                            Log.d(TAG, address)
-                            Log.d(TAG, addresses.toString())
+                            db.collection(getString(R.string.masjid))
+                                .document(addresses[0].adminArea)
+                                .collection(getString(R.string.kabupaten_kota_))
+                                .document(addresses[0].locality)
+                                .collection(getString(R.string.kecamatan))
+                                .document(getString(R.string.daftar_masjid))
+                                .collection(addresses[0].subLocality)
+                                .get()
+                                .addOnSuccessListener { result ->
+                                    if (result.isEmpty) {
+                                        Snackbar.make(activityNearMosqueBinding.root, R.string.tidak_ada_masjid, Snackbar.LENGTH_SHORT)
+                                                .show()
+                                    } else {
+                                        for (document in result) {
+                                            Log.d(TAG, "${document.id} => ${document.data}")
+                                            val mosque = document.toObject<MosqueEntity>()
+
+                                            val latitude = mosque.latitude
+                                            val longitude = mosque.Longitude
+                                            val title = mosque.name
+
+                                            val itemMosque = LatLng(latitude!!, longitude!!)
+                                            map?.addMarker(MarkerOptions().position(itemMosque).title(title))
+                                        }
+                                    }
+                                }
+                                .addOnFailureListener { exception ->
+                                    Log.d(TAG, "Error getting documents: ", exception)
+                                }
+
+                            showMaps()
 
                             map?.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     LatLng(lastKnownLocation!!.latitude,
