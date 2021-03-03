@@ -40,6 +40,8 @@
     <string name="gagal_mendapatkan_lokasi">Gagal mendapatkan lokasi!</string>
     <string name="pilih_lokasi_masjid">Pilih lokasi masjid</string>
     <string name="berhasil_ditambahkan">Berhasil ditambahkan</string>
+    <string name="gagal_menambahkan">Gagal menambahkan data</string>
+    <string name="daftar">Daftar</string>
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>

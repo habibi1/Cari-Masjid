@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -15,14 +16,19 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.project.masjid.R
+import com.project.masjid.database.DistrictEntity
 import com.project.masjid.database.MosqueEntity
+import com.project.masjid.database.SubDistrictEntity
 import com.project.masjid.databinding.ActivityFormAddMosqueBinding
+import com.project.masjid.ui.ChooseLocationActivity
 
 class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
 
     private var storagePermissionGranted = false
     private var imageUri: Uri? = null
     private lateinit var mosque: MosqueEntity
+    private lateinit var subDistrictEntity: SubDistrictEntity
+    private lateinit var districtEntity: DistrictEntity
 
     private lateinit var activityFormAddMosqueBinding: ActivityFormAddMosqueBinding
 
@@ -30,6 +36,7 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
         const val EXTRA_MOSQUE = "extra_mosque"
         private const val PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1
         private val PICK_IMAGE = 100
+        private val TAG = FormAddMosqueActivity::class.java.simpleName
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +46,10 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
 
         activityFormAddMosqueBinding.tilNameMosque.isHelperTextEnabled = false
         activityFormAddMosqueBinding.tilDescription.isHelperTextEnabled = false
+        activityFormAddMosqueBinding.tilFasilitas.isHelperTextEnabled = false
+        activityFormAddMosqueBinding.tilKegiatan.isHelperTextEnabled = false
+        activityFormAddMosqueBinding.tilInfoKotakAmal.isHelperTextEnabled = false
+        activityFormAddMosqueBinding.tilSejarah.isHelperTextEnabled = false
 
         mosque = intent.getParcelableExtra<MosqueEntity>(EXTRA_MOSQUE) as MosqueEntity
 
@@ -177,6 +188,10 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
         activityFormAddMosqueBinding.tvEmpty.isClickable = false
         activityFormAddMosqueBinding.tfNameMosque.isEnabled = false
         activityFormAddMosqueBinding.tfDescription.isEnabled = false
+        activityFormAddMosqueBinding.tfFasilitas.isEnabled = false
+        activityFormAddMosqueBinding.tfKegiatan.isEnabled = false
+        activityFormAddMosqueBinding.tfInfoKotakAmal.isEnabled = false
+        activityFormAddMosqueBinding.tfSejarah.isEnabled = false
     }
 
     private fun show(){
@@ -185,6 +200,10 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
         activityFormAddMosqueBinding.tvEmpty.isClickable = true
         activityFormAddMosqueBinding.tfNameMosque.isEnabled = true
         activityFormAddMosqueBinding.tfDescription.isEnabled = true
+        activityFormAddMosqueBinding.tfFasilitas.isEnabled = true
+        activityFormAddMosqueBinding.tfKegiatan.isEnabled = true
+        activityFormAddMosqueBinding.tfInfoKotakAmal.isEnabled = true
+        activityFormAddMosqueBinding.tfSejarah.isEnabled = true
     }
 
     private fun uploadData(){
@@ -219,21 +238,30 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
 
                 val db = Firebase.firestore
 
-                db.collection(getString(R.string.masjid))
-                    .document(mosque.province.toString())
-                    .collection(getString(R.string.kabupaten_kota_))
-                    .document(mosque.district.toString())
-                    .collection(getString(R.string.kecamatan))
-                    .document(getString(R.string.daftar_masjid))
-                    .collection(mosque.subDistrict.toString())
-                    .add(mosque)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful){
-                            Toast.makeText(this, getString(R.string.berhasil_ditambahkan), Toast.LENGTH_SHORT)
+                val setKecamatan = db.collection(getString(R.string.kecamatan)).document(mosque.district.toString()).collection(getString(R.string.daftar)).document()
+                val setKabupatenKota = db.collection(getString(R.string.kabupaten_kota_)).document(mosque.district.toString())
+                val setMasjid = db.collection(getString(R.string.masjid)).document()
+
+                subDistrictEntity = SubDistrictEntity(mosque.subDistrict)
+                districtEntity = DistrictEntity(mosque.district)
+
+                db.runBatch { batch ->
+                    batch.set(setKecamatan, subDistrictEntity)
+                    batch.set(setKabupatenKota, districtEntity)
+                    batch.set(setMasjid, mosque)
+                }.addOnCompleteListener { task ->
+                    if (task.isSuccessful){
+                        Toast.makeText(this, getString(R.string.berhasil_ditambahkan), Toast.LENGTH_SHORT)
                                 .show()
-                            finish()
-                        }
+                        finish()
                     }
+                }.addOnFailureListener{exception ->
+                    Toast.makeText(this, getString(R.string.gagal_menambahkan), Toast.LENGTH_SHORT)
+                            .show()
+                    Log.d(TAG, "get failed with ", exception)
+                    show()
+                }
+
             } else {
                 show()
                 // Handle failures
