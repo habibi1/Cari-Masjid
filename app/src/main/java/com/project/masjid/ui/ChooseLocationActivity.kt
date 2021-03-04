@@ -153,7 +153,7 @@ class ChooseLocationActivity : AppCompatActivity() {
                 activityChooseLocationBinding.rvListMosque.visibility = View.GONE
 
                 db.collection(getString(R.string.masjid))
-                    .whereEqualTo(getString(R.string.kecamatan), s)
+                    .whereEqualTo(getString(R.string.subdistrict), s.toString())
                     .get()
                     .addOnSuccessListener { result ->
 

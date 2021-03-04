@@ -19,6 +19,7 @@
     <string name="deskripsi">Deskripsi</string>
     <string name="alamat">Alamat</string>
     <string name="kecamatan">Kecamatan</string>
+    <string name="subdistrict">subDistrict</string>
     <string name="kabupaten_kota">Kabupaten/Kota</string>
     <string name="kabupaten_kota_">Kabupaten_Kota</string>
     <string name="provinsi">Provinsi</string>
