@@ -28,7 +28,6 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.project.masjid.R
 import com.project.masjid.database.MosqueEntity
-import com.project.masjid.databinding.ActivityMainBinding
 import com.project.masjid.databinding.ActivityNearMosqueMapsBinding
 import java.util.*
 
@@ -115,7 +114,7 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         for (item in courses){
             val latitude = item.latitude
-            val longitude = item.Longitude
+            val longitude = item.longitude
             val title = item.name
 
             val itemMosque = LatLng(latitude!!, longitude!!)
@@ -178,7 +177,7 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             val mosque = document.toObject<MosqueEntity>()
 
                                             val latitude = mosque.latitude
-                                            val longitude = mosque.Longitude
+                                            val longitude = mosque.longitude
                                             val title = mosque.name
 
                                             val itemMosque = LatLng(latitude!!, longitude!!)

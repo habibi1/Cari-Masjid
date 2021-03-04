@@ -24,7 +24,7 @@
     <string name="provinsi">Provinsi</string>
     <string name="negara">Negara</string>
     <string name="kode_pos">Kode Pos</string>
-    <string name="daftar_masjid">Daftar_Masjid</string>
+    <string name="daftar_masjid">Daftar Masjid</string>
     <string name="tidak_ada_masjid">Tidak ada masjid terdaftar!</string>
     <string name="data_kosong">Data kosong</string>
     <string name="tambah_fasilitas">Tambah Fasilitas</string>
@@ -42,6 +42,8 @@
     <string name="berhasil_ditambahkan">Berhasil ditambahkan</string>
     <string name="gagal_menambahkan">Gagal menambahkan data</string>
     <string name="daftar">Daftar</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -53,4 +55,6 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_pin_point_maps">MapPin</string>
+    <string name="maps">Maps</string>
+    <string name="title_activity_search_maps">Map</string>
 </resources>

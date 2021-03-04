@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class SubDistrictEntity(
-    var subDistrictName : String?
+    var subDistrictName : String? = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(parcel.readString()) {
     }

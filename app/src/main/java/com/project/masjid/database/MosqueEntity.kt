@@ -4,22 +4,22 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class MosqueEntity (
-        var name : String?,
-        var description : String?,
-        var fasilitas : String?,
-        var kegiatan : String?,
-        var infoKotakAmal : String?,
-        var sejarah : String?,
-        val addresses : String?,
-        val subDistrict : String?,
-        val nameSubDistrict : String?,
-        val district : String?,
-        val province : String?,
-        val country : String?,
-        val postalCode : String?,
-        val latitude : Double?,
-        val Longitude : Double?,
-        var downloadImage : String?
+    var name : String?,
+    var description : String?,
+    var fasilitas : String?,
+    var kegiatan : String?,
+    var infoKotakAmal : String?,
+    var sejarah : String?,
+    val addresses : String?,
+    val subDistrict : String?,
+    val nameSubDistrict : String?,
+    val district : String?,
+    val province : String?,
+    val country : String?,
+    val postalCode : String?,
+    val latitude : Double?,
+    val longitude : Double?,
+    var downloadImage : String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
@@ -55,7 +55,7 @@ data class MosqueEntity (
         parcel.writeString(country)
         parcel.writeString(postalCode)
         parcel.writeValue(latitude)
-        parcel.writeValue(Longitude)
+        parcel.writeValue(longitude)
         parcel.writeString(downloadImage)
     }
 
