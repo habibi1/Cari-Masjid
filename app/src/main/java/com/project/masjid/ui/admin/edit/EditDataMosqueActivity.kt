@@ -17,9 +17,11 @@ class EditDataMosqueActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_MOSQUE = "extra_mosque"
+        lateinit var mosqueData: MosqueEntity
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         activityEditDataMosqueBinding = ActivityEditDataMosqueBinding.inflate(layoutInflater)
         setContentView(activityEditDataMosqueBinding.root)
@@ -47,5 +49,13 @@ class EditDataMosqueActivity : AppCompatActivity() {
             moveWithObjectIntent.putExtra(EditMapsActivity.EXTRA_MOSQUE, mosque)
             startActivity(moveWithObjectIntent)
         }
+    }
+
+    fun updateField(mosqueEntity: MosqueEntity){
+        activityEditDataMosqueBinding.tfSubDistrict.setText(mosqueEntity.subDistrict)
+        activityEditDataMosqueBinding.tfDistrict.setText(mosqueEntity.district)
+        activityEditDataMosqueBinding.tfProvince.setText(mosqueEntity.province)
+        activityEditDataMosqueBinding.tfCountry.setText(mosqueEntity.country)
+        activityEditDataMosqueBinding.tfPostalCode.setText(mosqueEntity.postalCode)
     }
 }
