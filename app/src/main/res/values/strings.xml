@@ -58,4 +58,6 @@
     <string name="title_activity_pin_point_maps">MapPin</string>
     <string name="maps">Maps</string>
     <string name="title_activity_search_maps">Map</string>
+    <string name="ganti_lokasi_maps">Ganti Lokasi Maps</string>
+    <string name="title_activity_edit_maps">Map</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.project.masjid.ui.search_mosque
+package com.project.masjid.ui.admin.edit
 
 import android.content.Context
 import android.content.Intent
@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.masjid.R
 import com.project.masjid.database.MosqueEntity
-import com.project.masjid.ui.admin.pin.FormAddMosqueActivity
+import com.project.masjid.ui.search_mosque.DetailSearchMosqueActivity
+import com.project.masjid.ui.search_mosque.SearchMosqueAdapter
 
-class SearchMosqueAdapter (private val context: Context, private val items : List<MosqueEntity>)
-    : RecyclerView.Adapter<SearchMosqueAdapter.ViewHolder>(){
+class FilterDataMosqueAdapter(private val context: Context, private val items : List<MosqueEntity>)
+    : RecyclerView.Adapter<FilterDataMosqueAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_search_mosque, parent, false))
@@ -39,6 +40,7 @@ class SearchMosqueAdapter (private val context: Context, private val items : Lis
         private lateinit var context: Context
 
         fun bindItem(mosqueEntity: MosqueEntity, context: Context) {
+            mapsMosque.visibility = View.GONE
             nameMosque.text = mosqueEntity.name
             Glide.with(context)
                     .load(mosqueEntity.downloadImage)
@@ -47,23 +49,15 @@ class SearchMosqueAdapter (private val context: Context, private val items : Lis
             mosque = mosqueEntity
             this.context = context
 
-            mapsMosque.setOnClickListener(this)
             cvItemMosque.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
-            when (v?.id) {
+            when (v?.id){
                 R.id.cv_item_mosque -> {
-                    val moveWithObjectIntent = Intent(context, DetailSearchMosqueActivity::class.java)
-                    moveWithObjectIntent.putExtra(DetailSearchMosqueActivity.EXTRA_MOSQUE, mosque)
+                    val moveWithObjectIntent = Intent(context, EditDataMosqueActivity::class.java)
+                    moveWithObjectIntent.putExtra(EditDataMosqueActivity.EXTRA_MOSQUE, mosque)
                     context.startActivity(moveWithObjectIntent)
-                }
-                R.id.tv_maps -> {
-                    val intent = Intent(context, SearchMapsActivity::class.java)
-                    intent.putExtra(context.getString(R.string.latitude), mosque.latitude)
-                    intent.putExtra(context.getString(R.string.longitude), mosque.longitude)
-                    intent.putExtra(context.getString(R.string.nama_masjid), mosque.name)
-                    context.startActivity(intent)
                 }
             }
         }

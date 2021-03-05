@@ -34,8 +34,13 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".ui.admin.edit.EditMapsActivity"
+            android:label="@string/title_activity_edit_maps"></activity>
+        <activity android:name=".ui.admin.edit.EditDataMosqueActivity" />
+        <activity android:name=".ui.search_mosque.DetailSearchMosqueActivity" />
+        <activity
             android:name=".ui.search_mosque.SearchMapsActivity"
-            android:label="@string/title_activity_search_maps"></activity>
+            android:label="@string/title_activity_search_maps" />
         <activity android:name=".ui.admin.edit.FilterDataMosqueActivity" />
         <activity android:name=".ui.admin.pin.FormAddMosqueActivity" />
         <activity android:name=".ui.admin.pin.PinPointMapsActivity" />
