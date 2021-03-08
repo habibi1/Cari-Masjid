@@ -85,11 +85,10 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
                 if (grantResults.isNotEmpty() &&
                         grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     storagePermissionGranted = true
+                    openGallery()
                 }
             }
         }
-
-        openGallery()
     }
 
     override fun onClick(v: View?) {
@@ -238,10 +237,11 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
 
                 val db = Firebase.firestore
 
-                val setKecamatan = db.collection(getString(R.string.kecamatan)).document(mosque.district.toString()).collection(getString(R.string.daftar)).document()
+                val setKecamatan = db.collection(getString(R.string.kecamatan)).document(mosque.district.toString()).collection(getString(R.string.daftar)).document(mosque.subDistrict.toString())
                 val setKabupatenKota = db.collection(getString(R.string.kabupaten_kota_)).document(mosque.district.toString())
                 val setMasjid = db.collection(getString(R.string.masjid)).document()
 
+                mosque.id = setMasjid.id
                 subDistrictEntity = SubDistrictEntity(mosque.subDistrict)
                 districtEntity = DistrictEntity(mosque.district)
 
@@ -264,6 +264,8 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
 
             } else {
                 show()
+                Toast.makeText(this, getString(R.string.gagal_menambahkan), Toast.LENGTH_SHORT)
+                        .show()
                 // Handle failures
                 // ...
             }

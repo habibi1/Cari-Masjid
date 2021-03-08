@@ -216,6 +216,21 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/textfield_margin"
+                android:layout_marginBottom="@dimen/textfield_margin"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_data_masjid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/textfield_margin"
+                android:layout_marginBottom="@dimen/textfield_margin"
+                android:text="@string/edit_data_masjid"/>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

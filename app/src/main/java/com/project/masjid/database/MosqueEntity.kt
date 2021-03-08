@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class MosqueEntity (
+    var id : String? = "",
     var name : String? = "",
     var description : String? = "",
     var fasilitas : String? = "",
@@ -35,12 +36,14 @@ data class MosqueEntity (
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
+            parcel.readString(),
             parcel.readValue(Double::class.java.classLoader) as? Double,
             parcel.readValue(Double::class.java.classLoader) as? Double,
             parcel.readString()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(name)
         parcel.writeString(description)
         parcel.writeString(fasilitas)

@@ -8,6 +8,7 @@ object DataDummy {
         val mosque = ArrayList<MosqueEntity>()
 
         mosque.add(MosqueEntity(
+                "",
                 "Mushola BPK4",
                 "Deskripsi",
                 "Rajabasa, Kota Bandar Lampung, Lampung",
@@ -27,6 +28,7 @@ object DataDummy {
         ))
 
         mosque.add(MosqueEntity(
+                "",
                 "Mushola BPK",
                 "Deskripsi",
                 "Rajabasa, Kota Bandar Lampung, Lampung",

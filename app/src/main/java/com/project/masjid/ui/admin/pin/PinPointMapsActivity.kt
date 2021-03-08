@@ -312,6 +312,7 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
                 "",
                 "",
                 "",
+                "",
                 addresses[0].getAddressLine(0),
                 addresses[0].locality,
                 addresses[0].subLocality,

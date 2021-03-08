@@ -24,10 +24,14 @@ import com.project.masjid.ui.search_mosque.SearchMosqueAdapter
 
 class FilterDataMosqueActivity : AppCompatActivity() {
 
+    val db = Firebase.firestore
     private lateinit var activityFilterDataMosqueBinding: ActivityFilterDataMosqueBinding
+    private lateinit var kecamatanString: String
+    private lateinit var listMosqueFilter: ArrayList<MosqueEntity>
 
     companion object {
         private val TAG = FilterDataMosqueActivity::class.java.simpleName
+        private var status = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,11 +48,9 @@ class FilterDataMosqueActivity : AppCompatActivity() {
         activityFilterDataMosqueBinding.tvListMosque.visibility = View.GONE
         activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
 
-        val db = Firebase.firestore
-
         var listDistrict: ArrayList<String> = ArrayList()
         var listSubDistrict: ArrayList<String> = ArrayList()
-        var listMosqueFilter: ArrayList<MosqueEntity> = ArrayList()
+        listMosqueFilter = ArrayList()
 
         db.collection(getString(R.string.kabupaten_kota_))
             .get()
@@ -141,6 +143,8 @@ class FilterDataMosqueActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
 
+                kecamatanString = s.toString()
+
                 activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
                 activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.VISIBLE
                 activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
@@ -149,8 +153,10 @@ class FilterDataMosqueActivity : AppCompatActivity() {
                 activityFilterDataMosqueBinding.tvListMosque.visibility = View.GONE
                 activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
 
+                status = true
+
                 db.collection(getString(R.string.masjid))
-                    .whereEqualTo(getString(R.string.subdistrict), s.toString())
+                    .whereEqualTo(getString(R.string.subdistrict), kecamatanString)
                     .get()
                     .addOnSuccessListener { result ->
 
@@ -180,5 +186,52 @@ class FilterDataMosqueActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (status) {
+            replaceListMosque()
+        }
+    }
+
+    fun replaceListMosque(){
+        activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
+        activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.VISIBLE
+        activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
+        activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
+        activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.VISIBLE
+        activityFilterDataMosqueBinding.tvListMosque.visibility = View.GONE
+        activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
+
+        db.collection(getString(R.string.masjid))
+                .whereEqualTo(getString(R.string.subdistrict), kecamatanString)
+                .get()
+                .addOnSuccessListener { result ->
+
+                    Log.d("tetetes", result.documents.toString())
+
+                    listMosqueFilter.clear()
+
+                    for (document in result) {
+                        val subDistrict = document.toObject<MosqueEntity>()
+                        listMosqueFilter.add(subDistrict)
+                    }
+
+                    activityFilterDataMosqueBinding.rvListMosque.layoutManager = LinearLayoutManager(this@FilterDataMosqueActivity)
+                    activityFilterDataMosqueBinding.rvListMosque.adapter = SearchMosqueAdapter(this@FilterDataMosqueActivity, listMosqueFilter)
+
+                    activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
+                    activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.VISIBLE
+                    activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
+                    activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
+                    activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.GONE
+                    activityFilterDataMosqueBinding.tvListMosque.visibility = View.VISIBLE
+                    activityFilterDataMosqueBinding.rvListMosque.visibility = View.VISIBLE
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "Error getting documents: ", exception)
+                }
     }
 }

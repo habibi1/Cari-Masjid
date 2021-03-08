@@ -18,7 +18,7 @@ import com.project.masjid.database.MosqueEntity
 import com.project.masjid.databinding.ActivityEditMapsBinding
 import java.util.*
 
-class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapClickListener {
+class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapClickListener, View.OnClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var mosqueData: MosqueEntity
@@ -26,7 +26,6 @@ class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
 
     companion object {
         const val EXTRA_MOSQUE = "extra_mosque"
-        var status: Boolean = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,12 +33,39 @@ class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
         activityEditMapsBinding = ActivityEditMapsBinding.inflate(layoutInflater)
         setContentView(activityEditMapsBinding.root)
 
+        hiddenMaps()
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         mosqueData = intent.getParcelableExtra<MosqueEntity>(EXTRA_MOSQUE) as MosqueEntity
+
+        activityEditMapsBinding.btnConfirm.setOnClickListener(this)
+    }
+
+    private fun hiddenMaps(){
+        activityEditMapsBinding.btnConfirm.visibility = View.INVISIBLE
+        activityEditMapsBinding.map.visibility = View.INVISIBLE
+        activityEditMapsBinding.pbMaps.visibility = View.VISIBLE
+        activityEditMapsBinding.tvStatus.visibility = View.VISIBLE
+        activityEditMapsBinding.tvStatus.text = getString(R.string.mencari_lokasi)
+    }
+
+    private fun showMaps(){
+        activityEditMapsBinding.btnConfirm.visibility = View.INVISIBLE
+        activityEditMapsBinding.map.visibility = View.VISIBLE
+        activityEditMapsBinding.pbMaps.visibility = View.INVISIBLE
+        activityEditMapsBinding.tvStatus.visibility = View.INVISIBLE
+    }
+
+    private fun failedLoadMaps(string: String){
+        activityEditMapsBinding.btnConfirm.visibility = View.INVISIBLE
+        activityEditMapsBinding.map.visibility = View.INVISIBLE
+        activityEditMapsBinding.pbMaps.visibility = View.INVISIBLE
+        activityEditMapsBinding.tvStatus.visibility = View.VISIBLE
+        activityEditMapsBinding.tvStatus.text = string
     }
 
     /**
@@ -60,6 +86,8 @@ class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
         val pinMaps = LatLng(mosqueData.latitude!!, mosqueData.longitude!!)
         mMap.addMarker(MarkerOptions().position(pinMaps).title(mosqueData.name))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pinMaps))
+
+        showMaps()
     }
 
     override fun onMapClick(p0: LatLng?) {
@@ -84,6 +112,7 @@ class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
                 "",
                 "",
                 "",
+                "",
                 addresses[0].getAddressLine(0),
                 addresses[0].locality,
                 addresses[0].subLocality,
@@ -97,10 +126,8 @@ class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
             )
 
             EditDataMosqueActivity.mosqueData = mosqueData
-            status = true
 
-            activityEditMapsBinding.btnConfirm.visibility = View.VISIBLE
-            activityEditMapsBinding.pbMaps.visibility = View.INVISIBLE
+            showMaps()
 
 
         } catch (e: Exception){
@@ -108,7 +135,16 @@ class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
             Snackbar.make(activityEditMapsBinding.root, R.string.gagal_mendapatkan_lokasi, Snackbar.LENGTH_SHORT)
                 .show()
 
-            activityEditMapsBinding.pbMaps.visibility = View.INVISIBLE
+            failedLoadMaps(getString(R.string.gagal_mendapatkan_lokasi))
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.btn_confirm -> {
+                EditDataMosqueActivity.statusMaps = true
+                finish()
+            }
         }
     }
 }
