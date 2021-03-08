@@ -20,7 +20,6 @@ import com.project.masjid.database.SubDistrictEntity
 import com.project.masjid.databinding.ActivityChooseLocationBinding
 import com.project.masjid.databinding.ActivityFilterDataMosqueBinding
 import com.project.masjid.ui.ChooseLocationActivity
-import com.project.masjid.ui.search_mosque.SearchMosqueAdapter
 
 class FilterDataMosqueActivity : AppCompatActivity() {
 
@@ -40,6 +39,11 @@ class FilterDataMosqueActivity : AppCompatActivity() {
         activityFilterDataMosqueBinding = ActivityFilterDataMosqueBinding.inflate(layoutInflater)
         setContentView(activityFilterDataMosqueBinding.root)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         activityFilterDataMosqueBinding.pbDistrict.visibility = View.VISIBLE
         activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.GONE
         activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.GONE
@@ -53,36 +57,36 @@ class FilterDataMosqueActivity : AppCompatActivity() {
         listMosqueFilter = ArrayList()
 
         db.collection(getString(R.string.kabupaten_kota_))
-            .get()
-            .addOnSuccessListener { result ->
+                .get()
+                .addOnSuccessListener { result ->
 
-                Log.d("tetetes", result.documents.toString())
+                    Log.d("tetetes", result.documents.toString())
 
-                listDistrict.clear()
+                    listDistrict.clear()
 
-                for (document in result) {
-                    val district = document.toObject<DistrictEntity>()
-                    listDistrict.add(district.districtName.toString())
+                    for (document in result) {
+                        val district = document.toObject<DistrictEntity>()
+                        listDistrict.add(district.districtName.toString())
+                    }
+
+                    activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
+                    activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.GONE
+                    activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
+                    activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
+                    activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.GONE
+                    activityFilterDataMosqueBinding.tvListMosque.visibility = View.GONE
+                    activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
+
                 }
-
-                activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
-                activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.GONE
-                activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
-                activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
-                activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.GONE
-                activityFilterDataMosqueBinding.tvListMosque.visibility = View.GONE
-                activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
-
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "Error getting documents: ", exception)
-            }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "Error getting documents: ", exception)
+                }
 
         val adapter = ArrayAdapter(this, R.layout.item_list, listDistrict)
         (activityFilterDataMosqueBinding.actPilihKabupaten as? AutoCompleteTextView)?.setAdapter(adapter)
 
         activityFilterDataMosqueBinding.actPilihKabupaten.addTextChangedListener(object :
-            TextWatcher {
+                TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -100,30 +104,30 @@ class FilterDataMosqueActivity : AppCompatActivity() {
                 activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
 
                 db.collection(getString(R.string.kecamatan)).document(s.toString()).collection(getString(R.string.daftar))
-                    .get()
-                    .addOnSuccessListener { result ->
+                        .get()
+                        .addOnSuccessListener { result ->
 
-                        Log.d("tetetes", result.documents.toString())
+                            Log.d("tetetes", result.documents.toString())
 
-                        listSubDistrict.clear()
+                            listSubDistrict.clear()
 
-                        for (document in result) {
-                            val subDistrict = document.toObject<SubDistrictEntity>()
-                            listSubDistrict.add(subDistrict.subDistrictName.toString())
+                            for (document in result) {
+                                val subDistrict = document.toObject<SubDistrictEntity>()
+                                listSubDistrict.add(subDistrict.subDistrictName.toString())
+                            }
+
+                            activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
+                            activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.VISIBLE
+                            activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
+                            activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
+                            activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.GONE
+                            activityFilterDataMosqueBinding.tvListMosque.visibility = View.GONE
+                            activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
+
                         }
-
-                        activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
-                        activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.VISIBLE
-                        activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
-                        activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
-                        activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.GONE
-                        activityFilterDataMosqueBinding.tvListMosque.visibility = View.GONE
-                        activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
-
-                    }
-                    .addOnFailureListener { exception ->
-                        Log.d(TAG, "Error getting documents: ", exception)
-                    }
+                        .addOnFailureListener { exception ->
+                            Log.d(TAG, "Error getting documents: ", exception)
+                        }
 
                 val adapterSubDistrict = ArrayAdapter(this@FilterDataMosqueActivity, R.layout.item_list, listSubDistrict)
                 (activityFilterDataMosqueBinding.actPilihKecamatan as? AutoCompleteTextView)?.setAdapter(adapterSubDistrict)
@@ -132,7 +136,7 @@ class FilterDataMosqueActivity : AppCompatActivity() {
         })
 
         activityFilterDataMosqueBinding.actPilihKecamatan.addTextChangedListener(object :
-            TextWatcher {
+                TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -156,44 +160,36 @@ class FilterDataMosqueActivity : AppCompatActivity() {
                 status = true
 
                 db.collection(getString(R.string.masjid))
-                    .whereEqualTo(getString(R.string.subdistrict), kecamatanString)
-                    .get()
-                    .addOnSuccessListener { result ->
+                        .whereEqualTo(getString(R.string.subdistrict), kecamatanString)
+                        .get()
+                        .addOnSuccessListener { result ->
 
-                        Log.d("tetetes", result.documents.toString())
+                            Log.d("tetetes", result.documents.toString())
 
-                        listMosqueFilter.clear()
+                            listMosqueFilter.clear()
 
-                        for (document in result) {
-                            val subDistrict = document.toObject<MosqueEntity>()
-                            listMosqueFilter.add(subDistrict)
+                            for (document in result) {
+                                val subDistrict = document.toObject<MosqueEntity>()
+                                listMosqueFilter.add(subDistrict)
+                            }
+
+                            activityFilterDataMosqueBinding.rvListMosque.layoutManager = LinearLayoutManager(this@FilterDataMosqueActivity)
+                            activityFilterDataMosqueBinding.rvListMosque.adapter = FilterDataMosqueAdapter(this@FilterDataMosqueActivity, listMosqueFilter)
+
+                            activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
+                            activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.VISIBLE
+                            activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
+                            activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
+                            activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.GONE
+                            activityFilterDataMosqueBinding.tvListMosque.visibility = View.VISIBLE
+                            activityFilterDataMosqueBinding.rvListMosque.visibility = View.VISIBLE
                         }
-
-                        activityFilterDataMosqueBinding.rvListMosque.layoutManager = LinearLayoutManager(this@FilterDataMosqueActivity)
-                        activityFilterDataMosqueBinding.rvListMosque.adapter = SearchMosqueAdapter(this@FilterDataMosqueActivity, listMosqueFilter)
-
-                        activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
-                        activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.VISIBLE
-                        activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
-                        activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
-                        activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.GONE
-                        activityFilterDataMosqueBinding.tvListMosque.visibility = View.VISIBLE
-                        activityFilterDataMosqueBinding.rvListMosque.visibility = View.VISIBLE
-                    }
-                    .addOnFailureListener { exception ->
-                        Log.d(TAG, "Error getting documents: ", exception)
-                    }
+                        .addOnFailureListener { exception ->
+                            Log.d(TAG, "Error getting documents: ", exception)
+                        }
             }
 
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        if (status) {
-            replaceListMosque()
-        }
     }
 
     fun replaceListMosque(){
@@ -220,7 +216,7 @@ class FilterDataMosqueActivity : AppCompatActivity() {
                     }
 
                     activityFilterDataMosqueBinding.rvListMosque.layoutManager = LinearLayoutManager(this@FilterDataMosqueActivity)
-                    activityFilterDataMosqueBinding.rvListMosque.adapter = SearchMosqueAdapter(this@FilterDataMosqueActivity, listMosqueFilter)
+                    activityFilterDataMosqueBinding.rvListMosque.adapter = FilterDataMosqueAdapter(this@FilterDataMosqueActivity, listMosqueFilter)
 
                     activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
                     activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.VISIBLE

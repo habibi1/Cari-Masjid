@@ -293,6 +293,7 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
     override fun onMapClick(p0: LatLng?) {
 
         activityPinPointMapsBinding.pbMaps.visibility = View.VISIBLE
+        activityPinPointMapsBinding.btnConfirm.visibility = View.INVISIBLE
 
         map.clear()
 
@@ -333,6 +334,8 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
                 .show()
 
             activityPinPointMapsBinding.pbMaps.visibility = View.INVISIBLE
+            activityPinPointMapsBinding.btnConfirm.visibility = View.INVISIBLE
+
         }
     }
 

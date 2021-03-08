@@ -48,6 +48,8 @@ class EditDataMosqueActivity : AppCompatActivity(), View.OnClickListener {
         activityEditDataMosqueBinding = ActivityEditDataMosqueBinding.inflate(layoutInflater)
         setContentView(activityEditDataMosqueBinding.root)
 
+        show()
+
         mosque = intent.getParcelableExtra<MosqueEntity>(EXTRA_MOSQUE) as MosqueEntity
 
         Glide.with(this)
@@ -87,6 +89,14 @@ class EditDataMosqueActivity : AppCompatActivity(), View.OnClickListener {
         activityEditDataMosqueBinding.tfProvince.setText(mosqueEntity.province)
         activityEditDataMosqueBinding.tfCountry.setText(mosqueEntity.country)
         activityEditDataMosqueBinding.tfPostalCode.setText(mosqueEntity.postalCode)
+
+        mosque.subDistrict = mosqueEntity.subDistrict
+        mosque.district = mosqueEntity.district
+        mosque.province = mosqueEntity.province
+        mosque.country = mosqueEntity.country
+        mosque.postalCode = mosqueEntity.postalCode
+        mosque.latitude = mosqueEntity.latitude
+        mosque.longitude = mosqueEntity.longitude
     }
 
     override fun onClick(v: View?) {
@@ -149,9 +159,15 @@ class EditDataMosqueActivity : AppCompatActivity(), View.OnClickListener {
 
         val setKecamatan = db.collection(getString(R.string.kecamatan)).document(mosque.district.toString()).collection(getString(R.string.daftar)).document(mosque.subDistrict.toString())
         val setKabupatenKota = db.collection(getString(R.string.kabupaten_kota_)).document(mosque.district.toString())
-        val setMasjid = db.collection(getString(R.string.masjid)).document()
+        val setMasjid = db.collection(getString(R.string.masjid)).document(mosque.id.toString())
 
-        mosque.id = setMasjid.id
+        mosque.name = activityEditDataMosqueBinding.tfNameMosque.text.toString()
+        mosque.description = activityEditDataMosqueBinding.tfDescription.text.toString()
+        mosque.fasilitas = activityEditDataMosqueBinding.tfFasilitas.text.toString()
+        mosque.kegiatan = activityEditDataMosqueBinding.tfKegiatan.text.toString()
+        mosque.infoKotakAmal = activityEditDataMosqueBinding.tfInfoKotakAmal.text.toString()
+        mosque.sejarah = activityEditDataMosqueBinding.tfSejarah.text.toString()
+
         subDistrictEntity = SubDistrictEntity(mosque.subDistrict)
         districtEntity = DistrictEntity(mosque.district)
 

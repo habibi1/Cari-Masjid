@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.project.masjid.R
 import com.project.masjid.database.MosqueEntity
 import com.project.masjid.databinding.ActivityEditMapsBinding
+import com.project.masjid.ui.near_mosque.NearMosqueMapsActivity
 import java.util.*
 
 class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapClickListener, View.OnClickListener {
@@ -26,6 +27,7 @@ class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
 
     companion object {
         const val EXTRA_MOSQUE = "extra_mosque"
+        private const val DEFAULT_ZOOM = 15f
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,14 +87,12 @@ class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
         // Add a marker in Sydney and move the camera
         val pinMaps = LatLng(mosqueData.latitude!!, mosqueData.longitude!!)
         mMap.addMarker(MarkerOptions().position(pinMaps).title(mosqueData.name))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(pinMaps))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pinMaps, DEFAULT_ZOOM))
 
         showMaps()
     }
 
     override fun onMapClick(p0: LatLng?) {
-
-        activityEditMapsBinding.pbMaps.visibility = View.VISIBLE
 
         mMap.clear()
 
@@ -127,15 +127,17 @@ class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
 
             EditDataMosqueActivity.mosqueData = mosqueData
 
-            showMaps()
-
+            activityEditMapsBinding.btnConfirm.visibility = View.VISIBLE
+            activityEditMapsBinding.pbMaps.visibility = View.INVISIBLE
 
         } catch (e: Exception){
 
             Snackbar.make(activityEditMapsBinding.root, R.string.gagal_mendapatkan_lokasi, Snackbar.LENGTH_SHORT)
                 .show()
 
-            failedLoadMaps(getString(R.string.gagal_mendapatkan_lokasi))
+            activityEditMapsBinding.btnConfirm.visibility = View.INVISIBLE
+            activityEditMapsBinding.pbMaps.visibility = View.INVISIBLE
+
         }
     }
 

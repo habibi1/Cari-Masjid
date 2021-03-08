@@ -4,23 +4,23 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class MosqueEntity (
-    var id : String? = "",
-    var name : String? = "",
-    var description : String? = "",
-    var fasilitas : String? = "",
-    var kegiatan : String? = "",
-    var infoKotakAmal : String? = "",
-    var sejarah : String? = "",
-    val addresses : String? = "",
-    val subDistrict : String? = "",
-    val nameSubDistrict : String? = "",
-    val district : String? = "",
-    val province : String? = "",
-    val country : String? = "",
-    val postalCode : String? = "",
-    val latitude : Double? = 0.0,
-    val longitude : Double? = 0.0,
-    var downloadImage : String? = ""
+        var id : String? = "",
+        var name : String? = "",
+        var description : String? = "",
+        var fasilitas : String? = "",
+        var kegiatan : String? = "",
+        var infoKotakAmal : String? = "",
+        var sejarah : String? = "",
+        val addresses : String? = "",
+        var subDistrict : String? = "",
+        val nameSubDistrict : String? = "",
+        var district : String? = "",
+        var province : String? = "",
+        var country : String? = "",
+        var postalCode : String? = "",
+        var latitude : Double? = 0.0,
+        var longitude : Double? = 0.0,
+        var downloadImage : String? = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
