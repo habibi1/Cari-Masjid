@@ -18,6 +18,7 @@ class EditDataMosqueActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_MOSQUE = "extra_mosque"
         lateinit var mosqueData: MosqueEntity
+        var status = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +49,14 @@ class EditDataMosqueActivity : AppCompatActivity() {
             val moveWithObjectIntent = Intent(this, EditMapsActivity::class.java)
             moveWithObjectIntent.putExtra(EditMapsActivity.EXTRA_MOSQUE, mosque)
             startActivity(moveWithObjectIntent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (status){
+            updateField(mosqueData)
         }
     }
 
