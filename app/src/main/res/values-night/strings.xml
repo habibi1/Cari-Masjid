@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="arah_kiblat">Arah Kiblat</string>
+    <string name="panel_admin">Panel Admin</string>
 </resources>

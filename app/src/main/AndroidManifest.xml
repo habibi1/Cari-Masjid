@@ -43,8 +43,12 @@
         <activity android:name=".ui.admin.edit.FilterDataMosqueActivity" />
         <activity android:name=".ui.admin.pin.FormAddMosqueActivity" />
         <activity android:name=".ui.admin.pin.PinPointMapsActivity" />
-        <activity android:name=".ui.admin.AdminActivity" />
-        <activity android:name=".ui.kiblat.ArahKiblatActivity" />
+        <activity android:name=".ui.admin.AdminActivity"
+            android:label="@string/panel_admin"
+            android:parentActivityName=".ui.MainActivity"/>
+        <activity android:name=".ui.kiblat.ArahKiblatActivity"
+            android:label="@string/arah_kiblat"
+            android:parentActivityName=".ui.MainActivity"/>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />

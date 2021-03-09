@@ -79,6 +79,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
                 startActivity(Intent(this, AdminActivity::class.java))
+                finish()
             }
             //setResult(Activity.RESULT_OK)
         })

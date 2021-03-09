@@ -8,6 +8,7 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -174,13 +175,10 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                             val db = Firebase.firestore
 
+                            //Toast.makeText(this, addresses[0].locality, Toast.LENGTH_SHORT).show()
+
                             db.collection(getString(R.string.masjid))
-                                .document(addresses[0].adminArea)
-                                .collection(getString(R.string.kabupaten_kota_))
-                                .document(addresses[0].locality)
-                                .collection(getString(R.string.kecamatan))
-                                .document(getString(R.string.daftar_masjid))
-                                .collection(addresses[0].subLocality)
+                                .whereEqualTo(getString(R.string.subdistrict), addresses[0].locality)
                                 .get()
                                 .addOnSuccessListener { result ->
                                     if (result.isEmpty) {
