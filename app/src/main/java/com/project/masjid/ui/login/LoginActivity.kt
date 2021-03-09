@@ -127,7 +127,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
         // TODO : initiate successful logged in experience
         Toast.makeText(
             applicationContext,
-            "$welcome $displayName",
+            getString(R.string.login_berhasil),
             Toast.LENGTH_LONG
         ).show()
     }

@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project.masjid">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -35,7 +34,7 @@
 
         <activity
             android:name=".ui.admin.edit.EditMapsActivity"
-            android:label="@string/title_activity_edit_maps"></activity>
+            android:label="@string/title_activity_edit_maps" />
         <activity android:name=".ui.admin.edit.EditDataMosqueActivity" />
         <activity android:name=".ui.search_mosque.DetailSearchMosqueActivity" />
         <activity
@@ -45,6 +44,7 @@
         <activity android:name=".ui.admin.pin.FormAddMosqueActivity" />
         <activity android:name=".ui.admin.pin.PinPointMapsActivity" />
         <activity android:name=".ui.admin.AdminActivity" />
+        <activity android:name=".ui.kiblat.ArahKiblatActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />

@@ -45,6 +45,8 @@
     <string name="daftar">Daftar</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
+    <string name="not_support">Tidak didukung oleh perangkat anda!</string>
+    <string name="login_berhasil">Login Berhasil</string>
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -60,4 +62,5 @@
     <string name="title_activity_search_maps">Map</string>
     <string name="ganti_lokasi_maps">Ganti Lokasi Maps</string>
     <string name="title_activity_edit_maps">Map</string>
+    <string name="arah_kiblat">Arah Kiblat</string>
 </resources>

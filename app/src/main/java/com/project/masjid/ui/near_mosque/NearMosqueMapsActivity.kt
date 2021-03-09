@@ -7,6 +7,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -48,6 +49,18 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
+    companion object {
+        private val TAG = NearMosqueMapsActivity::class.java.simpleName
+        private const val DEFAULT_ZOOM = 15f
+        private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+
+        // Keys for storing activity state.
+        // [START maps_current_place_state_keys]
+        private const val KEY_CAMERA_POSITION = "camera_position"
+        private const val KEY_LOCATION = "location"
+        // [END maps_current_place_state_keys]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityNearMosqueBinding = ActivityNearMosqueMapsBinding.inflate(layoutInflater)
@@ -78,22 +91,22 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun hiddenMaps(){
-        activityNearMosqueBinding.map.isInvisible
-        activityNearMosqueBinding.pbMaps.isVisible
-        activityNearMosqueBinding.tvStatus.isVisible
+        activityNearMosqueBinding.map.visibility = View.VISIBLE
+        activityNearMosqueBinding.pbMaps.visibility = View.VISIBLE
+        activityNearMosqueBinding.tvStatus.visibility = View.VISIBLE
         activityNearMosqueBinding.tvStatus.text = getString(R.string.mencari_lokasi)
     }
 
     private fun showMaps(){
-        activityNearMosqueBinding.map.isVisible
-        activityNearMosqueBinding.pbMaps.isInvisible
-        activityNearMosqueBinding.tvStatus.isInvisible
+        activityNearMosqueBinding.map.visibility = View.VISIBLE
+        activityNearMosqueBinding.pbMaps.visibility = View.GONE
+        activityNearMosqueBinding.tvStatus.visibility = View.GONE
     }
 
     private fun failedLoadMaps(string: String){
-        activityNearMosqueBinding.map.isInvisible
-        activityNearMosqueBinding.pbMaps.isInvisible
-        activityNearMosqueBinding.tvStatus.isVisible
+        activityNearMosqueBinding.map.visibility = View.GONE
+        activityNearMosqueBinding.pbMaps.visibility = View.GONE
+        activityNearMosqueBinding.tvStatus.visibility = View.VISIBLE
         activityNearMosqueBinding.tvStatus.text = string
     }
 
@@ -107,8 +120,10 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
+        showMaps()
 
+        map = googleMap
+/*
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[NearMosqueViewModel::class.java]
         val courses = viewModel.getMosque()
 
@@ -120,7 +135,7 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val itemMosque = LatLng(latitude!!, longitude!!)
             map?.addMarker(MarkerOptions().position(itemMosque).title(title))
             map?.moveCamera(CameraUpdateFactory.newLatLngZoom(itemMosque, DEFAULT_ZOOM))
-        }
+        }*/
 
         // Prompt the user for permission.
         getLocationPermission()
@@ -289,15 +304,4 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     // [END maps_current_place_update_location_ui]
 
-    companion object {
-        private val TAG = NearMosqueMapsActivity::class.java.simpleName
-        private const val DEFAULT_ZOOM = 15f
-        private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
-
-        // Keys for storing activity state.
-        // [START maps_current_place_state_keys]
-        private const val KEY_CAMERA_POSITION = "camera_position"
-        private const val KEY_LOCATION = "location"
-        // [END maps_current_place_state_keys]
-    }
 }
