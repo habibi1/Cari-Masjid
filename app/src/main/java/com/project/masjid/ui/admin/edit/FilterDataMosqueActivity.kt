@@ -44,6 +44,10 @@ class FilterDataMosqueActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        activityFilterDataMosqueBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
+
         activityFilterDataMosqueBinding.pbDistrict.visibility = View.VISIBLE
         activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.GONE
         activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.GONE

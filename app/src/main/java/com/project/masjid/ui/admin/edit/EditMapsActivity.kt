@@ -45,6 +45,10 @@ class EditMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
         mosqueData = intent.getParcelableExtra<MosqueEntity>(EXTRA_MOSQUE) as MosqueEntity
 
         activityEditMapsBinding.btnConfirm.setOnClickListener(this)
+
+        activityEditMapsBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
     }
 
     private fun hiddenMaps(){

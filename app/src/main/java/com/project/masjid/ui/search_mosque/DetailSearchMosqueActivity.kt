@@ -23,6 +23,10 @@ class DetailSearchMosqueActivity : AppCompatActivity() {
         activityDetailSearchMosqueBinding = ActivityDetailSearchMosqueBinding.inflate(layoutInflater)
         setContentView(activityDetailSearchMosqueBinding.root)
 
+        activityDetailSearchMosqueBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
+
         mosque = intent.getParcelableExtra<MosqueEntity>(EXTRA_MOSQUE) as MosqueEntity
 
         Glide.with(this)

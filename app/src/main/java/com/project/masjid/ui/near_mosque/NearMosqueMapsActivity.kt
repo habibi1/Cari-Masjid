@@ -79,6 +79,10 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Retrieve the content view that renders the map.
         setContentView(activityNearMosqueBinding.root)
 
+        activityNearMosqueBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
+
         hiddenMaps()
 
         // Construct a FusedLocationProviderClient.

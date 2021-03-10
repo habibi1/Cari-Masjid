@@ -71,6 +71,10 @@ class EditDataMosqueActivity : AppCompatActivity(), View.OnClickListener {
         activityEditDataMosqueBinding.btnEditMapsMosque.setOnClickListener (this)
         activityEditDataMosqueBinding.btnEditDataMasjid.setOnClickListener(this)
         activityEditDataMosqueBinding.imgMosque.setOnClickListener(this)
+
+        activityEditDataMosqueBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
     }
 
     override fun onResume() {

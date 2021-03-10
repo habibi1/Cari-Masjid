@@ -32,29 +32,19 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".ui.admin.edit.EditMapsActivity"
-            android:label="@string/title_activity_edit_maps" />
+        <activity android:name=".ui.others.AboutActivity" />
+        <activity android:name=".ui.others.HelpActivity" />
+        <activity android:name=".ui.admin.edit.EditMapsActivity" />
         <activity android:name=".ui.admin.edit.EditDataMosqueActivity" />
         <activity android:name=".ui.search_mosque.DetailSearchMosqueActivity" />
-        <activity
-            android:name=".ui.search_mosque.SearchMapsActivity"
-            android:label="@string/title_activity_search_maps" />
+        <activity android:name=".ui.search_mosque.SearchMapsActivity" />
         <activity android:name=".ui.admin.edit.FilterDataMosqueActivity" />
         <activity android:name=".ui.admin.pin.FormAddMosqueActivity" />
         <activity android:name=".ui.admin.pin.PinPointMapsActivity" />
-        <activity android:name=".ui.admin.AdminActivity"
-            android:label="@string/panel_admin"
-            android:parentActivityName=".ui.MainActivity"/>
-        <activity android:name=".ui.kiblat.ArahKiblatActivity"
-            android:label="@string/arah_kiblat"
-            android:parentActivityName=".ui.MainActivity"/>
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity
-            android:name=".ui.near_mosque.NearMosqueMapsActivity"
-            android:label="@string/title_activity_near_mosque_maps" />
+        <activity android:name=".ui.admin.AdminActivity" />
+        <activity android:name=".ui.kiblat.ArahKiblatActivity" />
+        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.near_mosque.NearMosqueMapsActivity" />
         <activity android:name=".ui.ChooseLocationActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>

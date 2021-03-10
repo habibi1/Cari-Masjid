@@ -45,6 +45,10 @@ class ArahKiblatActivity : AppCompatActivity() {
         activityArahKiblatBinding = ActivityArahKiblatBinding.inflate(layoutInflater)
         setContentView(activityArahKiblatBinding.root)
 
+        activityArahKiblatBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
+
         getLocationPermission()
     }
 

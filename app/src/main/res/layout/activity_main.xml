@@ -1,34 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.MainActivity">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_masjid_terdekat"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/masjid_terdekat"/>
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_cari_masjid"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/app_name"
+            app:menu="@menu/top_app_bar"
+            app:navigationIcon="@drawable/ic_baseline_error_24"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/cari_masjid"/>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/login"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_normal">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_arah_kiblat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/arah_kiblat"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_masjid_terdekat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/masjid_terdekat"/>
 
-</LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cari_masjid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cari_masjid"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_arah_kiblat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/arah_kiblat"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

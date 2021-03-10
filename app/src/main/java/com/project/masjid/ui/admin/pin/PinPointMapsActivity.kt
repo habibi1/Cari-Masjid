@@ -89,6 +89,10 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
         mapFragment.getMapAsync(this)
 
         activityPinPointMapsBinding.btnConfirm.setOnClickListener(this)
+
+        activityPinPointMapsBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
     }
 
     private fun hiddenMaps(){

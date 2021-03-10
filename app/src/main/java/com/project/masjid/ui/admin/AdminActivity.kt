@@ -22,6 +22,10 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
 
         activityAdminBinding.cvPinMaps.setOnClickListener(this)
         activityAdminBinding.cvEditMaps.setOnClickListener(this)
+
+        activityAdminBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
     }
 
     override fun onClick(v: View?) {

@@ -10,10 +10,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
+import com.google.android.material.appbar.MaterialToolbar
 import com.project.masjid.R
 import com.project.masjid.ui.admin.AdminActivity
 import kotlinx.coroutines.CoroutineScope
@@ -35,13 +33,17 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_login)
 
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
+        val btnBack = findViewById<MaterialToolbar>(R.id.top_app_bar)
+
+        btnBack.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)

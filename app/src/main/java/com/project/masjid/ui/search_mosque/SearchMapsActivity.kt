@@ -11,11 +11,13 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.project.masjid.R
+import com.project.masjid.databinding.ActivitySearchMapsBinding
 import com.project.masjid.ui.near_mosque.NearMosqueMapsActivity
 
 class SearchMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+    private lateinit var activitySearchMapsBinding: ActivitySearchMapsBinding
 
     companion object {
         private const val DEFAULT_ZOOM = 15f
@@ -23,11 +25,16 @@ class SearchMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_maps)
+        activitySearchMapsBinding = ActivitySearchMapsBinding.inflate(layoutInflater)
+        setContentView(activitySearchMapsBinding.root)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        activitySearchMapsBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
     }
 
     /**

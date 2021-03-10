@@ -49,6 +49,10 @@ class ChooseLocationActivity : AppCompatActivity() {
         activityChooseLocationBinding.tvListMosque.visibility = View.GONE
         activityChooseLocationBinding.rvListMosque.visibility = View.GONE
 
+        activityChooseLocationBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
+
         val db = Firebase.firestore
 
         var listDistrict: ArrayList<String> = ArrayList()

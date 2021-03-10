@@ -61,6 +61,10 @@ class FormAddMosqueActivity : AppCompatActivity(), View.OnClickListener {
 
         activityFormAddMosqueBinding.imgMosque.setOnClickListener(this)
         activityFormAddMosqueBinding.btnSubmit.setOnClickListener(this)
+
+        activityFormAddMosqueBinding.topAppBar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
     }
 
     private fun getStoragePermission() {

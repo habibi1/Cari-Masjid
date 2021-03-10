@@ -1,79 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".ui.ChooseLocationActivity">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pilih_lokasi"
-        android:layout_gravity="center_horizontal"/>
-
-    <ProgressBar
-        android:id="@+id/pb_district"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_pilih_kabupaten"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <AutoCompleteTextView
-            android:id="@+id/act_pilih_kabupaten"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/cari_masjid"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_normal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pilih_lokasi"
+            android:layout_gravity="center_horizontal"/>
+
+        <ProgressBar
+            android:id="@+id/pb_district"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_pilih_kabupaten"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/act_pilih_kabupaten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pilih_kabupaten"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/pb_sub_district"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_pilih_kecamatan"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/act_pilih_kecamatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pilih_kecamatan"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/pb_rv_list_mosque"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_list_mosque"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/pilih_kabupaten"
-            android:inputType="none"
-            tools:ignore="LabelFor" />
+            android:gravity="center"
+            android:text="@string/daftar_masjid"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ProgressBar
-        android:id="@+id/pb_sub_district"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_pilih_kecamatan"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <AutoCompleteTextView
-            android:id="@+id/act_pilih_kecamatan"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list_mosque"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/pilih_kecamatan"
-            android:inputType="none"
-            tools:ignore="LabelFor" />
+            android:layout_height="wrap_content"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/pb_rv_list_mosque"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_list_mosque"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/daftar_masjid"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_list_mosque"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
