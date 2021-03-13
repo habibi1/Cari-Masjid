@@ -24,26 +24,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Toolbar.OnMenuIt
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
-        activityMainBinding.btnMasjidTerdekat.setOnClickListener(this)
-        activityMainBinding.btnCariMasjid.setOnClickListener(this)
-        activityMainBinding.btnLogin.setOnClickListener(this)
-        activityMainBinding.btnArahKiblat.setOnClickListener(this)
+        activityMainBinding.cvMasjidTerdekat.setOnClickListener(this)
+        activityMainBinding.cvCariMasjid.setOnClickListener(this)
+        activityMainBinding.cvArahKiblat.setOnClickListener(this)
 
         activityMainBinding.topAppBar.setOnMenuItemClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id){
-            R.id.btn_masjid_terdekat -> {
+            R.id.cv_masjid_terdekat -> {
                 startActivity(Intent(this, NearMosqueMapsActivity::class.java))
             }
-            R.id.btn_cari_masjid -> {
+            R.id.cv_cari_masjid -> {
                 startActivity(Intent(this, ChooseLocationActivity::class.java))
             }
-            R.id.btn_login -> {
-                startActivity(Intent(this, LoginActivity::class.java))
-            }
-            R.id.btn_arah_kiblat -> {
+            R.id.cv_arah_kiblat -> {
                 startActivity(Intent(this, ArahKiblatActivity::class.java))
             }
         }

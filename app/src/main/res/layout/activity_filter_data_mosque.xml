@@ -29,8 +29,10 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/textfield_margin"
             android:text="@string/pilih_lokasi"
             android:layout_gravity="center_horizontal"/>
 
@@ -89,12 +91,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_margin="@dimen/activity_normal"
             android:text="@string/daftar_masjid"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list_mosque"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_search_mosque"/>
 
     </LinearLayout>
 

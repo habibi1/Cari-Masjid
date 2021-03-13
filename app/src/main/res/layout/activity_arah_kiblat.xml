@@ -29,7 +29,7 @@
             android:id="@+id/iv_kiblat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_navigation_100"
+            android:src="@drawable/ic_direction_of_the_kaabah"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

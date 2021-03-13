@@ -72,13 +72,25 @@ class ChooseLocationActivity : AppCompatActivity() {
                     listDistrict.add(district.districtName.toString())
                 }
 
-                activityChooseLocationBinding.pbDistrict.visibility = View.GONE
-                activityChooseLocationBinding.tilPilihKecamatan.visibility = View.GONE
-                activityChooseLocationBinding.tilPilihKabupaten.visibility = View.VISIBLE
-                activityChooseLocationBinding.pbSubDistrict.visibility = View.GONE
-                activityChooseLocationBinding.pbRvListMosque.visibility = View.GONE
-                activityChooseLocationBinding.tvListMosque.visibility = View.GONE
-                activityChooseLocationBinding.rvListMosque.visibility = View.GONE
+                if (listDistrict.isEmpty()) {
+                    activityChooseLocationBinding.tvStatus.text = getString(R.string.tidak_ada_masjid_terdaftar)
+                    activityChooseLocationBinding.pbDistrict.visibility = View.GONE
+                    activityChooseLocationBinding.tilPilihKecamatan.visibility = View.GONE
+                    activityChooseLocationBinding.tilPilihKabupaten.visibility = View.GONE
+                    activityChooseLocationBinding.pbSubDistrict.visibility = View.GONE
+                    activityChooseLocationBinding.pbRvListMosque.visibility = View.GONE
+                    activityChooseLocationBinding.tvListMosque.visibility = View.GONE
+                    activityChooseLocationBinding.rvListMosque.visibility = View.GONE
+                } else {
+                    activityChooseLocationBinding.tvStatus.text = getString(R.string.pilih_lokasi)
+                    activityChooseLocationBinding.pbDistrict.visibility = View.GONE
+                    activityChooseLocationBinding.tilPilihKecamatan.visibility = View.GONE
+                    activityChooseLocationBinding.tilPilihKabupaten.visibility = View.VISIBLE
+                    activityChooseLocationBinding.pbSubDistrict.visibility = View.GONE
+                    activityChooseLocationBinding.pbRvListMosque.visibility = View.GONE
+                    activityChooseLocationBinding.tvListMosque.visibility = View.GONE
+                    activityChooseLocationBinding.rvListMosque.visibility = View.GONE
+                }
 
             }
             .addOnFailureListener { exception ->

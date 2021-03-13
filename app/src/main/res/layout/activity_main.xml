@@ -16,7 +16,7 @@
             android:layout_height="?attr/actionBarSize"
             app:title="@string/app_name"
             app:menu="@menu/top_app_bar"
-            app:navigationIcon="@drawable/ic_baseline_error_24"
+            app:navigationIcon="@drawable/ic_mosque"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -32,29 +32,86 @@
             android:orientation="vertical"
             android:padding="@dimen/activity_normal">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_masjid_terdekat"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_masjid_terdekat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/masjid_terdekat"/>
+                android:layout_margin="@dimen/card_margin">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_cari_masjid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/cari_masjid"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/card_padding">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login"/>
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_baseline_my_location_24"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_arah_kiblat"
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_normal"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/masjid_terdekat"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_cari_masjid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/arah_kiblat"/>
+                android:layout_margin="@dimen/card_margin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/card_padding">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_round_search_24"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_normal"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/cari_masjid"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_arah_kiblat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/card_margin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/card_padding">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_kaaba"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_normal"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/arah_kiblat"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 

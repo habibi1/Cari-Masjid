@@ -73,13 +73,25 @@ class FilterDataMosqueActivity : AppCompatActivity() {
                         listDistrict.add(district.districtName.toString())
                     }
 
-                    activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
-                    activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.GONE
-                    activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
-                    activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
-                    activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.GONE
-                    activityFilterDataMosqueBinding.tvListMosque.visibility = View.GONE
-                    activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
+                    if (listDistrict.isEmpty()) {
+                        activityFilterDataMosqueBinding.tvStatus.text = getString(R.string.tidak_ada_masjid_terdaftar)
+                        activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
+                        activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.GONE
+                        activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.GONE
+                        activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
+                        activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.GONE
+                        activityFilterDataMosqueBinding.tvListMosque.visibility = View.GONE
+                        activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
+                    } else {
+                        activityFilterDataMosqueBinding.tvStatus.text = getString(R.string.pilih_lokasi)
+                        activityFilterDataMosqueBinding.pbDistrict.visibility = View.GONE
+                        activityFilterDataMosqueBinding.tilPilihKecamatan.visibility = View.GONE
+                        activityFilterDataMosqueBinding.tilPilihKabupaten.visibility = View.VISIBLE
+                        activityFilterDataMosqueBinding.pbSubDistrict.visibility = View.GONE
+                        activityFilterDataMosqueBinding.pbRvListMosque.visibility = View.GONE
+                        activityFilterDataMosqueBinding.tvListMosque.visibility = View.GONE
+                        activityFilterDataMosqueBinding.rvListMosque.visibility = View.GONE
+                    }
 
                 }
                 .addOnFailureListener { exception ->
