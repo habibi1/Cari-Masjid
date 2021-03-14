@@ -79,6 +79,8 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Retrieve the content view that renders the map.
         setContentView(activityNearMosqueBinding.root)
 
+        getLocationPermission()
+
         activityNearMosqueBinding.topAppBar.setNavigationOnClickListener {
             this.onBackPressed()
         }

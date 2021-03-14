@@ -330,8 +330,14 @@ class PinPointMapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.
                 ""
             )
 
-            activityPinPointMapsBinding.btnConfirm.visibility = View.VISIBLE
-            activityPinPointMapsBinding.pbMaps.visibility = View.INVISIBLE
+            if (addresses[0].adminArea.contains(getString(R.string.lampung))) {
+                activityPinPointMapsBinding.btnConfirm.visibility = View.VISIBLE
+                activityPinPointMapsBinding.pbMaps.visibility = View.INVISIBLE
+            } else {
+                Snackbar.make(activityPinPointMapsBinding.root, R.string.lokasi_diluar_lampung, Snackbar.LENGTH_SHORT)
+                        .show()
+            }
+
         } catch (e: Exception){
 
             Snackbar.make(activityPinPointMapsBinding.root, R.string.gagal_mendapatkan_lokasi, Snackbar.LENGTH_SHORT)
