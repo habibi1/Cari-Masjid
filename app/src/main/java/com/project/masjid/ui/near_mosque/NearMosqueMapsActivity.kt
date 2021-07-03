@@ -8,13 +8,9 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -199,8 +195,14 @@ class NearMosqueMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             val longitude = mosque.longitude
                                             val title = mosque.name
 
-                                            val itemMosque = LatLng(latitude!!, longitude!!)
-                                            map?.addMarker(MarkerOptions().position(itemMosque).title(title))
+                                            val loc2 = Location("")
+                                            loc2.latitude = latitude!!
+                                            loc2.longitude = longitude!!
+
+                                            val distance = lastKnownLocation!!.distanceTo(loc2)/1000
+
+                                            val itemMosque = LatLng(latitude, longitude)
+                                            map?.addMarker(MarkerOptions().position(itemMosque).title(title).snippet("Jarak: " + String.format("%.1f", distance) + " KM"))
                                         }
                                     }
                                 }

@@ -9,6 +9,7 @@
     <string name="tidak_ada_masjid_terdaftar">Tidak ada masjid untuk ditampilkan!</string>
     <string name="mencari_lokasi">Mencari lokasi</string>
     <string name="lokasi_tidak_ditemukan">Lokasi tidak ditemukan.</string>
+    <string name="gagal_hitung_jarak">Gagal menghitung jarak</string>
     <string name="login">Login</string>
     <string name="pilih_titik_lokasi_masjid">Pilih titik lokasi masjid</string>
     <string name="konfirmasi">Konfirmasi</string>
